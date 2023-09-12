@@ -36,6 +36,8 @@ namespace Dominio.Entidades
         #region Metodos
         public void Validar(string email, string contrasenia)
         {
+            //if (ExisteUsuario(email))
+            //    throw new Exception($"El mail {email} ya esta registrado. Intente loguearse");
             ValidarEmail(email);
             ValidarContrasenia(contrasenia);
         }
