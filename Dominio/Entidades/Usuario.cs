@@ -36,12 +36,18 @@ namespace Dominio.Entidades
         #region Metodos
         public void Validar(string email, string contrasenia)
         {
+            //TODO: Preguntar al profesor si existe usuario lo controla el usuario o el sistem
             //if (ExisteUsuario(email))
             //    throw new Exception($"El mail {email} ya esta registrado. Intente loguearse");
             ValidarEmail(email);
             ValidarContrasenia(contrasenia);
         }
 
+        /// <summary>
+        /// Metodo que permite validar el email de un usuario en el sistma. Este no puede ser vacio y debe contener '@' y '.'
+        /// </summary>
+        /// <param name="email">Email que identifica al usuario en el sistema</param>
+        /// <exception cref="Exception"></exception>
         private void ValidarEmail(string email)
         {
             if (email.Equals(string.Empty))
@@ -75,7 +81,6 @@ namespace Dominio.Entidades
         #endregion
 
         #region Overrided Methods
-        //Overrides
         public override string ToString()
         {
             return $"El suaurio es {Email}";

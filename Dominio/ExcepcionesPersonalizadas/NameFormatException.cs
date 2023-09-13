@@ -1,7 +1,7 @@
 ﻿namespace Dominio.ExcepcionesPersonalizadas
 {
     [Serializable]
-    public class NameFormatException :Exception
+    public class NameFormatException : Exception
     {
         public NameFormatException() { }
 

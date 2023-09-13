@@ -8,7 +8,7 @@
         private string _apellido;
         private DateTime _fechaNacimiento;
         private bool _bloqueado;
-        private List<Amigo> _amigos;
+        private List<Solicitud> _amigos;
 
         #endregion
 
@@ -39,7 +39,7 @@
             set { _bloqueado = value; }
         }
 
-        public List<Amigo> Amigos
+        public List<Solicitud> Amigos
         {
             get { return _amigos; }
         }
@@ -49,7 +49,7 @@
         #region Constructores
 
         public Miembro(
-            List<Amigo> amigos,
+            List<Solicitud> amigos,
             DateTime fechaNacimiento,
             bool bloqueado = false,
             string nombre = "Natalia",
@@ -57,7 +57,7 @@
             ) : base(nombre, apellido)
         {
             //Si amigos esta vacio, crea una nueva lista
-            amigos ??= new List<Amigo>();
+            amigos ??= new List<Solicitud>();
             _amigos = amigos;
             _fechaNacimiento = fechaNacimiento;
             _bloqueado = bloqueado;
@@ -119,7 +119,7 @@
         /// </summary>
         /// <param name="nuevoAmigo">Nuevo amigo a agregar a la lista del miembro</param>
         /// <exception cref="Exception"></exception>
-        public void AgregarAmigo(Amigo nuevoAmigo)
+        public void AgregarAmigo(Solicitud nuevoAmigo)
         {
             //TODO: Logica para agregar un amigo a la lista de amigos
         }
