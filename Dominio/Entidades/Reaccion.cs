@@ -1,6 +1,8 @@
-﻿namespace Dominio.Entidades
+﻿using Dominio.Interfaces;
+
+namespace Dominio.Entidades
 {
-    public class Reaccion
+    public class Reaccion : IValidable
     {
         #region Atributos
 
@@ -57,7 +59,7 @@
         /// <param name="nuevaReaccion">Nueva reacciono de un <c>Miembro</c> a una <c>Publicacion</c>.</param>
         public void ModificarReaccion(bool nuevaReaccion)
         {
-            //TODO: Logica para el cambio de una reaccion
+            _like = nuevaReaccion;
         }
         #endregion
 

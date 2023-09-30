@@ -4,7 +4,10 @@
     {
         #region Constructores
 
-        public Comentario() { }
+        public Comentario() : base() 
+        { 
+            //TODO: Cheuqear quehaga el autoincremento de el constructor base
+        }
 
         #endregion
 

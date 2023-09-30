@@ -8,7 +8,6 @@
         private string _apellido;
         private DateTime _fechaNacimiento;
         private bool _bloqueado;
-        private List<Solicitud> _amigos;
 
         #endregion
 
@@ -39,11 +38,6 @@
             set { _bloqueado = value; }
         }
 
-        public List<Solicitud> Amigos
-        {
-            get { return _amigos; }
-        }
-
         #endregion
 
         #region Constructores
@@ -70,19 +64,20 @@
 
         #region Metodos
 
-        //TODO: Preguntar al profesor como hacer override de un metodo heredado
-        public static void Validar()
+        public override void Validar()
         {
-
+            base.Validar();
+            ValidarNombre();
+            ValidarApellido();
+            ValidarFechaNacimiento();
         }
 
         /// <summary>
         /// Valida que la fecha de nacimiento no sea posterior a la fecha actual
         /// <para>Exception:</para>
-        /// Exception - En caso de ingresar una fecha posterior a la actural, arroja un error.
+        /// Exception - En caso de ingresar una fecha posterior a la actual, arroja un error.
         /// </summary>
         /// <exception cref="Exception"></exception>
-
         public void ValidarFechaNacimiento()
         {
             //TODO: Logica de validar fecha nacimiento
@@ -113,24 +108,14 @@
         }
 
         /// <summary>
-        /// Agrega una amigo a la lista de amigos del miembro      
-        /// <para>Exception:</para>
-        /// Exception - El amigo ingresado debe ser un <c>Amigo</c> valido.
+        /// Aceptar o rechazar una solicitud de amistad
         /// </summary>
-        /// <param name="nuevoAmigo">Nuevo amigo a agregar a la lista del miembro</param>
-        /// <exception cref="Exception"></exception>
-        public void AgregarAmigo(Solicitud nuevoAmigo)
+        /// <param name="miembro">El <c>Miembro</c> que realizo la solicitud</param>
+        /// <returns>Devuelve la respuesta a la solicitud, siendo <c>true</c> si la acepto y <c>false</c> si la rechazo</returns>
+        public bool AceptarSolicitud(Miembro miembro)
         {
-            //TODO: Logica para agregar un amigo a la lista de amigos
-        }
-
-        /// <summary>
-        /// Permite a los miembros, establecer una relacion de amistad con otro miembro
-        /// </summary>
-        /// <param name="solicitado">A quien se le solicita establecer un vincoulo de amistad</param>
-        public void SolicitarAmistad(Miembro solicitado)
-        {
-            //TODO: Logica para solicitar la amistad
+            //TODO: Mostrar info del solicitante. Cambiar estado de solicitud a aceptada o rechazada
+            return true;
         }
 
         /// <summary>
@@ -140,25 +125,25 @@
         /// <param name="contenido">El contenido de la publicacion. La misma no puede ser vacia</param>
         /// <param name="imagen">Debe contener obligatoriamente una imagen <para><i><b>Nota:</b> Actualmente guarda la ruta de la imagen unicamente</i></para></param>
         /// <param name="privado">Define el alcance de un post. Toma dos valores posibles <c>publico o privado</c> siendo <c>publico</c> por default</param>
-        public void Publicar(string titulo, string contenido, string imagen, bool privado = false)
-        {
-            //TODO: Logica para realizar una publicacion.
-            #warning Es el usuario el que deberia publicar, o es la publicacion misma. Como implementar la limitacion entonces que solo los miembros publican
-        }
+        //public void Publicar(string titulo, string contenido, string imagen, bool privado = false)
+        //{
+        //    //TODO: Logica para realizar una publicacion.
+        //    #warning Es el usuario el que deberia publicar, o es la publicacion misma. Como implementar la limitacion entonces que solo los miembros publican
+        //}
 
         /// <summary>
         /// Permite a un miembro realizar una publicacion de tipo <c>Comentario</c>
         /// </summary>
         /// <param name="titulo">Titulo de la publicacion. El mismo no puede ser vacio y debe contener al menos 3 caracteres</param>
         /// <param name="contenido">El contenido de la publicacion. La misma no puede ser vacia</param>
-        public void Comentar(string titulo, string contenido)
-        {
-            //TODO: Logica de comentar
-            #warning Es el usuario el que deberia publicar, o es la publicacion misma. Como implementar la limitacion entonces que solo los miembros publican
-        }
+        //public void Comentar(string titulo, string contenido)
+        //{
+        //    //TODO: Logica de comentar una publicacion
+        //    #warning Es el usuario el que deberia publicar, o es la publicacion misma. Como implementar la limitacion entonces que solo los miembros publican
+        //}
 
         #endregion
-
+        //TODO: Este es comentario de prueba pa los pibes
         #region Overrided Methods
 
         public override string ToString()

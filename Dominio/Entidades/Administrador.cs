@@ -22,9 +22,10 @@
         }
 
         /// <summary>
-        /// Permite a un <c>Administrador</c> censurar un comentario realizado por un <c>Miembro</c>
+        /// Permite a un <c>Administrador</c> censurar un <c>Post</c> realizado por un <c>Miembro</c>
         /// </summary>
-        public void CensurarComentario()
+        /// <param name="post"><c>Post</c> que el <c>Administrador</c> quiere censurar</param>
+        public void CensurarPost(Post post)
         {
             //TODO: Logica para censurar comentarios
         }

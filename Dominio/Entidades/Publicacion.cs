@@ -1,15 +1,17 @@
-﻿namespace Dominio.Entidades
+﻿using Dominio.Interfaces;
+
+namespace Dominio.Entidades
 {
-    public class Publicacion
+    public class Publicacion : IValidable
     {
         #region Atributos
 
-        private static int s_lastId;
+        private static int s_ultId;
         private int _id;
         private string _titulo;
+        private string _contenido;
         private Miembro _autor;
         private DateTime _fecha;
-        private string _contenido;
         private List<Reaccion> _reacciones;
 
         #endregion
@@ -54,10 +56,12 @@
 
         public Publicacion()
         {
-            _id = s_lastId++;
+            _id = s_ultId++;
 
             _fecha = new DateTime();
             _fecha = DateTime.Now;
+
+            _reacciones = new List<Reaccion>();
         }
 
         /// <summary>
@@ -71,7 +75,7 @@
         /// <param name="reacciones">Lista de todas las reacciones que recibio la publicacion</param>
         public Publicacion(string titulo,Miembro autor, DateTime? fecha, string contenido, List<Reaccion> reacciones)
         {
-            _id = s_lastId++;
+            _id = s_ultId++;
 
             _titulo = titulo;
 
@@ -97,10 +101,29 @@
         }
 
 
+
         #endregion
 
         #region Metodos
 
+        public void Validar()
+        {
+        }
+
+        private void EsReaccionUnica(Miembro miembro)
+        {
+            //TODO: Miembro no puede reaccionar dos veces. Tiene que asegurarse que en la lista no se repita el miembro pasado por parametro
+        }
+
+        private void ValidarTitulo()
+        {
+            //TODO: El titulo no puede ser vacio, debe contener al menos 3 caracteres
+        }
+
+        public void ValidarContenido()
+        {
+            //TODO: El contendio no puede ser vacio
+        }
         //TODO: Implementar los posibles metodos de una publicacion
 
         #endregion

@@ -1,12 +1,13 @@
 ﻿using Dominio.Enum;
+using Dominio.Interfaces;
 
 namespace Dominio.Entidades
 {
-    public class Solicitud
+    public class Solicitud : IValidable
     {
         #region Atributos
 
-        private static int s_lastId = 1;
+        private static int s_ultId = 1;
         private int _id;
         private Miembro _solicitante;
         private Miembro _solicitado;
@@ -48,21 +49,13 @@ namespace Dominio.Entidades
 
         public Solicitud()
         {
-            //Auto incremental
-            _id = s_lastId++;
-
-            //TODO: Validar que los atributos solicitado y solicitante no sean nulos
-            
-            _estado = new EstadoSolicitud();
-            _estado = EstadoSolicitud.PENDIENTE_APROVACION;
-
-            _fechaSolicitud = new DateTime();
-            _fechaSolicitud = DateTime.Now;
+            //TODO: Como hacer que no se pueda usar el constructor por default
+            _id = s_ultId++;
         }
 
         public Solicitud (Miembro solicitante, Miembro solicitado)
         {
-            _id = s_lastId++;
+            _id = s_ultId++;
 
             //TODO: Validar que los atributos solicitado y solicitante no sean nulos
             _solicitante = solicitante;
@@ -78,18 +71,20 @@ namespace Dominio.Entidades
         #endregion
 
         #region Metodos
-        public void ValidarMiembro()
+
+        public void Validar()
+        {
+
+        }
+
+        public void ValidarSolicitante()
         {
             //TODO: Validar que un miembro sea un objeto valido
         }
-        public void AceptarSolicitud()
-        {
-            //TODO: Logica para aceptar una solicitud
-        }
 
-        public void RechazarSolicitud()
+        public void ValidarSolicitado()
         {
-            //TODO: Logica para rechazar una solicitud
+            //TODO: Validar que un miembro sea un objeto valido
         }
 
         #endregion

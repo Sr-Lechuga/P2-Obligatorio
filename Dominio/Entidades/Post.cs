@@ -3,7 +3,7 @@
     public class Post : Publicacion
     {
         #region Atributos
-        private string _image;
+        private string _imagen;
         private bool _privado;
         private List<Comentario> _comentarios;
         private bool _censurado;
@@ -12,8 +12,8 @@
         #region Propiedades
         public string Image
         {
-            get { return _image; }
-            set { _image = value; }
+            get { return _imagen; }
+            set { _imagen = value; }
         }
         public bool Privado
         {
@@ -37,8 +37,9 @@
         /// </summary>
         public Post()
         {
-            _image = string.Empty;
+            _imagen = string.Empty;
             _comentarios = new List<Comentario>();
+            _censurado = false;
         }
 
         /// <summary>
@@ -55,7 +56,7 @@
         public Post(string image, bool privado) : base()
         {
             image ??= string.Empty;
-            _image = image;
+            _imagen = image;
             _privado = privado;
 
             //Al crear una post el mismo no deberia tener comentarios ni deberia estar censurado
