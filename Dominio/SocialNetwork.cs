@@ -14,7 +14,7 @@ namespace Dominio
             _administradores = new List<Administrador>();
             _miembros = new List<Miembro>();
             _relaciones = new List<Solicitud>();
-            _publicaciones = new List<Publicacion>();
+            _publicaciones = new List<Post>();
         }
 
         //Propiedad para recuperar info de isntancia
@@ -60,26 +60,80 @@ namespace Dominio
 
         public void AltaAdmisitrador() { }
 
+
+        /// <summary>
+        /// Metodo que permite buscar un <c>Miembro</c> en el sistema
+        /// </summary>
+        /// <param name="email">
+        /// <c>Email</c> con el que se busca a un <c>Miembro</c>
+        /// </param>
+        /// <returns><c>Miembro</c></returns>
         public Miembro BuscarMiembro() { return null; /*Devuelve un miembro*/}
 
+        /// <summary>
+        /// Metodo que permite al <c>Administrador</c> bloquear un miembro
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> a bloquear </param>
         public void BloquearMiembro() { }
 
+        /// <summary>
+        /// Metodo que permite al <c>Administrador</c> censurar un comentario
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> que realizo el comentario</param>
+        /// <param name="comentario"><c>Comentario</c> a censurar</param>
         public void CensurarComentario(Comentario comentario) { }
 
+        /// <summary>
+        /// Metodo que permite gestionar una solicitud
+        /// </summary>
+        /// <param name="solicitud"> <c>Solicitud</c> que se va a gestionar </param>
         public void GestionSolicitud(Solicitud solicitud) { }
 
+        /// <summary>
+        /// Metodo que permite actualizar las <c>Relaciones</c> entre los <c>Miembros</c>
+        /// </summary>
+        /// <param name="miembro"><c>Miemro</c> a actualizar</param>
         public List<Solicitud> ActualizarAmigos(Miembro miembro) { return null; /*Devuelve lista miembros*/ }
 
+        /// <summary>
+        /// Metodo que muestra los <c>Miembros</c> disponibles para amistad
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> al que se le mostrara la lista de amigos disponibles</param>
+        /// <returns>Lista de <c>Miembros</c></returns>
         public List<Miembro> MostrarMiembrosDisponiblesParaAmistad() { return null; /*Devuleve lista de miembros*/ }
 
+        /// <summary>
+        /// Metodo que permite enviar una <c>Solicitud</c> de amistad
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> al que se le enviara la solicitud</param>
         public void EnviarSolicitud(Miembro miembro) { }
 
+        /// <summary>
+        /// Metodo que muestra a los amigos de un <c>Miembro</c>
+        /// </summary>
+        /// <param name="miembro"> <c>Miembro</c> al que se le mostrara la lista de <c>Miembros</c> que son sus amigos</param>
+        /// <returns>Lista de <c>Miembros</c></returns>
         public List<Miembro> BuscarAmigos(Miembro miembro) { return null; /*Devuelve lista de miembros*/ }
 
+        /// <summary>
+        /// Metodo que devuelve una lista con todos los <c>Comentarios</c>
+        /// </summary>
+        /// <returns>Lista de <c>Comentarios</c></returns>
         public List<Comentario> DevolverListaComentarios() { return null; /*Dvuelve la lista total de comentarios*/ }
 
-        public List<Post> DevolverListaComentariosPorMiembro(Miembro miembro) { return null; /*Devuelve una lista de post filtrada por miemro*/ }
+        /// <summary>
+        /// Metodo que devuelve una lista de todos los <c>Post</c> que ha realizado un <c>Miembro</c>
+        /// </summary>
+        /// <param name="miembro"></param>
+        /// <returns>Lista de <c>Post</c></returns>
+        public List<Post> DevolverListaPostPorMiembro(Miembro miembro) { return null; /*Devuelve una lista de post filtrada por miemro*/ }
 
+        /// <summary>
+        /// Metodo que devuelve una lista de todos los <c>Comentarios</c> que ha realizado un <c>Miembro</c>
+        /// </summary>
+        /// <param name="miembro"></param>
+        /// <returns>Lista de <c>Comentarios</c></returns>
+        //TODO: No deberiamos tener tambien una lista de comentarios por post?
         public List<Comentario> DevolverListaComentarioPorMiembro(Miembro miembro ) { return null; /*Devuelve una lista de comentarios de un miembro*/}
         #endregion
 
