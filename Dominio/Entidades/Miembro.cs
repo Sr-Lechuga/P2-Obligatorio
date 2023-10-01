@@ -80,7 +80,9 @@
         /// <exception cref="Exception"></exception>
         public void ValidarFechaNacimiento()
         {
-            //TODO: Logica de validar fecha nacimiento
+            if (_fechaNacimiento > DateTime.Today)
+                throw new Exception("La fecha de nacimiento debe ser menor a la fecha actual");
+            //TODO: Create an custom exception for date of birth 
         }
 
         /// <summary>
