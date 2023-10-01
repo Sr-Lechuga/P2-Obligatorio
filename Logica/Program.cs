@@ -5,7 +5,7 @@
 
         static void Main(string[] args)
         {
-            string[] opciones = {"Dar de alta a un miembro", // he llegao ameo lalalalala
+            string[] opciones = {"Dar de alta a un miembro",
                 "Listar publicaciones por tipo",
                 "Listar post con comentarios",
                 "Listar post entre fechas",
