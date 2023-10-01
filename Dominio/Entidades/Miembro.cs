@@ -41,18 +41,17 @@
         #endregion
 
         #region Constructores
+        public Miembro(string email,string contrasenia) : base(email,contrasenia)
+        {
 
+        }
         public Miembro(
-            List<Solicitud> amigos,
             DateTime fechaNacimiento,
             bool bloqueado = false,
             string nombre = "Natalia",
             string apellido = "Natalia"
             ) : base(nombre, apellido)
         {
-            //Si amigos esta vacio, crea una nueva lista
-            amigos ??= new List<Solicitud>();
-            _amigos = amigos;
             _fechaNacimiento = fechaNacimiento;
             _bloqueado = bloqueado;
             _nombre = nombre;
