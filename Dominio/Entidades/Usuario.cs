@@ -27,6 +27,10 @@ namespace Dominio.Entidades
         #endregion
 
         #region Constructores
+
+        //Deshabilitacion de constructor por defecto, los usuarios siempre deben tener usuario y contrasenia
+        private Usuario() { }
+
         public Usuario(string email, string contrasenia)
         {
             Email = email;
@@ -37,9 +41,6 @@ namespace Dominio.Entidades
         #region Metodos
         public virtual void Validar()
         {
-            //TODO: Preguntar al profesor si existe usuario lo controla el usuario o el sistem
-            //if (ExisteUsuario(email))
-            //    throw new Exception($"El mail {email} ya esta registrado. Intente loguearse");
             ValidarEmail(_email);
             ValidarContrasenia(_contrasenia);
         }
