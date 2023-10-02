@@ -46,17 +46,22 @@
 
         }
         public Miembro(
-            DateTime fechaNacimiento,
-            bool bloqueado = false,
-            string nombre = "Natalia",
-            string apellido = "Natalia"
-            ) : base(nombre, apellido)
+            string email,
+            string contrasenia,
+            string? nombre,
+            string? apellido,
+            DateTime? fechaNacimiento
+            ) : base(email, contrasenia)
         {
-            _fechaNacimiento = fechaNacimiento;
-            _bloqueado = bloqueado;
             _nombre = nombre;
             _apellido = apellido;
-            _fechaNacimiento = fechaNacimiento;
+
+            if (fechaNacimiento == null) 
+                _fechaNacimiento = DateTime.MinValue;
+            else
+                _fechaNacimiento = (DateTime)fechaNacimiento;
+
+            _bloqueado = false;
         }
 
         #endregion
@@ -77,7 +82,7 @@
         /// Exception - En caso de ingresar una fecha posterior a la actual, arroja un error.
         /// </summary>
         /// <exception cref="Exception"></exception>
-        public void ValidarFechaNacimiento()
+        private void ValidarFechaNacimiento()
         {
             if (_fechaNacimiento > DateTime.Today)
                 throw new Exception("La fecha de nacimiento debe ser menor a la fecha actual");
@@ -90,7 +95,7 @@
         /// NameFormatException - En caso de que el nombre sea vacio, arroja un error.
         /// </summary>
         /// <exception cref="ExcepcionesPersonalizadas.NameFormatException"></exception> 
-        public void ValidarNombre()
+        private void ValidarNombre()
         {
             if (string.IsNullOrEmpty(_nombre))
                 throw new ExcepcionesPersonalizadas.NameFormatException("El nombre ingresado es vacio. Intenelo con uno nuevo nuevo");
@@ -102,7 +107,7 @@
         /// NameFormatException - En caso de que el apellido sea vacio, arroja un error.
         /// </summary>
         /// <exception cref="ExcepcionesPersonalizadas.NameFormatException"></exception> 
-        public void ValidarApellido()
+        private void ValidarApellido()
         {
             if (string.IsNullOrEmpty(_nombre))
                 throw new ExcepcionesPersonalizadas.NameFormatException("El apellido ingresado es vacio. Intenelo con uno nuevo nuevo");
