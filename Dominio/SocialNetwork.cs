@@ -2,7 +2,7 @@
 
 namespace Dominio
 {
-    internal class SocialNetwork
+    public class SocialNetwork
     {
         #region Patron Singleton
         //Atrbuto de instancia statico
@@ -56,7 +56,12 @@ namespace Dominio
             //TODO: como hacer para identificar si el usuario logueado es un administrador o es un miembro
         }
 
-        public void AltaMiembro() { }
+
+        public void AltaMiembro(Miembro miembro) 
+        {
+            miembro.Validar();
+            _miembros.Add(miembro);
+        }
 
         public void AltaAdmisitrador() { }
 

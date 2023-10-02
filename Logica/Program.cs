@@ -1,8 +1,11 @@
-﻿namespace Vista
+﻿using Dominio;
+using Dominio.Entidades;
+using Dominio.ExcepcionesPersonalizadas;
+
+namespace Vista
 {
     public class Program
     {
-
         static void Main(string[] args)
         {
             string[] opciones = {"Dar de alta a un miembro",
@@ -49,7 +52,7 @@
             }
 
         }
-
+        
         /// <summary>
         /// Dado un array de opciones, muestra en consola todas las opciones disponibles en formato 'posicion.descripcion'
         /// <para><i><b>Nota:</b> el menu de opciones dibujado contiene un salto de pagina al comienzo y otro al final.</i></para>
@@ -74,7 +77,7 @@
             {
                 case 1:
                     Console.WriteLine("--------------- Alta miembro ---------------\n");
-                    //AltaMiemro();
+                    AltaMiembro();
                     break;
                 case 2:
                     Console.WriteLine("--------------- Listar publicaciones por tipo ---------------\n");
@@ -96,6 +99,40 @@
                     Console.WriteLine("Ingrese una opcion valida del menu.");
                     return;
             }
+        }
+
+        private static void AltaMiembro()
+        {
+            SocialNetwork sistema = SocialNetwork.Instancia;
+            Console.WriteLine("Los campos marcados con (*), son obligatorios\n");
+            Console.Write("Ingrese el e-mail(*): ");
+            string? email = Console.ReadLine();
+            Console.Write("Ingrese la contraseña(*): ");
+            string? contrasenia = Console.ReadLine();
+            Console.Write("Ingrese su nombre: ");
+            string? nombre = Console.ReadLine();
+            Console.Write("Ingrese su apellido: ");
+            string? apellido = Console.ReadLine();
+            
+            Console.Write("Ingrese su fecha de nacimiento en formato DD/MM/YYYY: ");
+            bool exito = DateTime.TryParse(Console.ReadLine(), out DateTime fechaNacimiento);
+            while (!exito)
+            {
+                Console.Write("Ingrese su fecha de nacimiento en formato DD/MM/YYYY: ");
+                exito = DateTime.TryParse(Console.ReadLine(), out fechaNacimiento);
+            }
+
+            Miembro nuevoMiembro = new(email,contrasenia,nombre,apellido,fechaNacimiento);
+
+            try
+            {
+                sistema.AltaMiembro(nuevoMiembro);
+            }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine(ex.Message); 
+            }
+
         }
     }
 }
