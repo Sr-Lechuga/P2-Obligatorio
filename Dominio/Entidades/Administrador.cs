@@ -2,7 +2,7 @@
 {
     public class Administrador : Usuario
     {
-        #region  Cosntructores
+        #region  Constructores
 
         public Administrador(string email, string contrasenia) : base(email, contrasenia)
         {
@@ -35,5 +35,7 @@
         {
             return $"El administrador es: {Email}";
         }
+
+        #endregion
     }
 }
