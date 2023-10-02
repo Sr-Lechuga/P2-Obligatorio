@@ -27,6 +27,7 @@
         public bool Censurado
         {
             get { return _censurado; }
+            // no deberiamos poner set tambien??
         }
         #endregion
 

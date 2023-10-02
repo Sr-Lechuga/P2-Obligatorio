@@ -6,7 +6,7 @@ namespace Dominio
     {
         #region Patron Singleton
         //Atrbuto de instancia statico
-        private static SocialNetwork _instancia;
+        private static SocialNetwork _instancia;    
         
         //Constructor
         private SocialNetwork()
@@ -73,13 +73,24 @@ namespace Dominio
         /// <c>Email</c> con el que se busca a un <c>Miembro</c>
         /// </param>
         /// <returns><c>Miembro</c></returns>
-        public Miembro BuscarMiembro() { return null; /*Devuelve un miembro*/}
+        public Miembro BuscarMiembro(string nombre, string apellido) 
+        {
+            foreach(Miembro miembro in  _miembros)
+            {
+                if (miembro.Nombre == nombre && miembro.Apellido == apellido)
+                    return miembro;
+            }
+            //Devuelve un miembro *** HASTA AHI LLEGUE
+        }
 
         /// <summary>
         /// Metodo que permite al <c>Administrador</c> bloquear un miembro
         /// </summary>
         /// <param name="miembro"><c>Miembro</c> a bloquear </param>
-        public void BloquearMiembro() { }
+        public void BloquearMiembro() 
+        {
+        
+        }
 
         /// <summary>
         /// Metodo que permite al <c>Administrador</c> censurar un comentario
