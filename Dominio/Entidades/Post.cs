@@ -68,6 +68,13 @@
         #endregion
 
         #region Metodos
+
+        public List<Post> ObtenerPost()
+        {
+            List<Post> posts = new List<Post>;
+            Post postDeMusica = new Post()
+        }
+
         /// <summary>
         /// Permite agregar un <c>Comentario</c> a la lista de comentarios
         /// </summary>

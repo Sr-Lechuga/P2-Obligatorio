@@ -50,7 +50,7 @@ namespace Dominio
         #endregion
 
         #region Metodos
-
+   
         public void ingresarSistema() 
         {
             //TODO: como hacer para identificar si el usuario logueado es un administrador o es un miembro
