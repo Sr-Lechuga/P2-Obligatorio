@@ -7,12 +7,12 @@ namespace Dominio.Entidades
         #region Atributos
 
         private static int s_ultId;
-        private int _id;
-        private string _titulo;
-        private string _contenido;
-        private Miembro _autor;
-        private DateTime _fecha;
-        private List<Reaccion> _reacciones;
+        protected int _id;
+        protected string _titulo;
+        protected string _contenido;
+        protected Miembro _autor;
+        protected DateTime _fecha;
+        protected List<Reaccion> _reacciones;
 
         #endregion
 
@@ -85,18 +85,34 @@ namespace Dominio.Entidades
 
         private void EsReaccionUnica(Miembro miembro)
         {
-            //TODO: Miembro no puede reaccionar dos veces. Tiene que asegurarse que en la lista no se repita el miembro pasado por parametro
+            int i = 0;
+            bool habiaReaccionado = false;
+            while (!habiaReaccionado && i < _reacciones.Count)
+            {
+                if (_reacciones[i].Miembro.Equals(miembro))
+                    habiaReaccionado = true;
+                i++;
+            }
+
+            if (habiaReaccionado)
+                throw new Exception($"El miembro {miembro.Email}, ya habia reaccionado en esta publicacion.");
         }
 
         private void ValidarTitulo()
         {
-            //TODO: El titulo no puede ser vacio, debe contener al menos 3 caracteres
+            if (string.IsNullOrEmpty(_titulo))
+                throw new Exception("El titulo no puede ser vacio");
+            if (_titulo.Length < 3)
+                throw new Exception("El titulo debe contener al menos 3 caracteres");
         }
 
-        public void ValidarContenido()
+        private void ValidarContenido()
         {
-            //TODO: El contendio no puede ser vacio
+            if (string.IsNullOrEmpty(_contenido))
+                throw new Exception("El contenido no puede ser vacio");
         }
+
+
 
         #endregion
     }
