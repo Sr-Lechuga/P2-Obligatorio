@@ -83,21 +83,6 @@ namespace Dominio.Entidades
             ValidarContenido();
         }
 
-        private void EsReaccionUnica(Miembro miembro)
-        {
-            int i = 0;
-            bool habiaReaccionado = false;
-            while (!habiaReaccionado && i < _reacciones.Count)
-            {
-                if (_reacciones[i].Miembro.Equals(miembro))
-                    habiaReaccionado = true;
-                i++;
-            }
-
-            if (habiaReaccionado)
-                throw new Exception($"El miembro {miembro.Email}, ya habia reaccionado en esta publicacion.");
-        }
-
         private void ValidarTitulo()
         {
             if (string.IsNullOrEmpty(_titulo))
@@ -112,7 +97,46 @@ namespace Dominio.Entidades
                 throw new Exception("El contenido no puede ser vacio");
         }
 
+        public void AgregarReaccion (Miembro miembro, bool like)
+        {
+            Reaccion reaccion = new Reaccion(miembro, like);
 
+            if (EsReaccionUnica(miembro))
+                _reacciones.Add(reaccion);
+            else
+            {
+                Reaccion reaccionDePublicacion = BuscarReaccion(miembro);
+                reaccionDePublicacion.ModificarReaccion(like);
+            }
+        }
+
+        private bool EsReaccionUnica(Miembro miembro)
+        {
+            int i = 0;
+            bool habiaReaccionado = false;
+            while (!habiaReaccionado && i < _reacciones.Count)
+            {
+                if (_reacciones[i].Miembro.Equals(miembro))
+                    habiaReaccionado = true;
+                i++;
+            }
+
+            return !habiaReaccionado;
+        }
+
+        private Reaccion BuscarReaccion(Miembro miembro)
+        {
+            int i = 0;
+            Reaccion? reaccion = null;
+            while ( reaccion == null && i < _reacciones.Count)
+            {
+                if (_reacciones[i].Miembro.Equals(miembro))
+                    reaccion = _reacciones[i];
+                i++;
+            }
+
+            return reaccion;
+        }
 
         #endregion
     }

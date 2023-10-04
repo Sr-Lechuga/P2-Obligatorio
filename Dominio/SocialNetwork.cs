@@ -299,7 +299,8 @@ namespace Dominio
 
         public List<Miembro> MiembrosConMasPublicaciones()
         {
-            //TODO: Lista de los miembros con mas publicaciones de cualquier tipo. Si hay mas de un miembro con la misma cantidad, mostrarlos todos
+            //TODO: Lista de los miembros con mas publicaciones de cualquier tipo.
+            //Si hay mas de un miembro con la misma cantidad, mostrarlos todos
             return null;
         }
 
