@@ -4,7 +4,7 @@
     {
         #region Constructores
 
-        public Comentario() : base() 
+        public Comentario(string titulo, string contenido, Miembro autor) : base(titulo,contenido,autor) 
         { 
             //TODO: Cheuqear quehaga el autoincremento de el constructor base
         }
