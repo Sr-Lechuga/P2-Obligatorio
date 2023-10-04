@@ -1,12 +1,14 @@
 ﻿namespace Dominio.Entidades
 {
-    public class Post : Publicacion
+    public class Post : Publicacion, IComparable<Post>
     {
         #region Atributos
+
         private string _imagen;
         private bool _privado;
         private List<Comentario> _comentarios;
         private bool _censurado;
+
         #endregion
 
         #region Propiedades
@@ -32,11 +34,17 @@
         #endregion
 
         #region Constructores
+        //TODO: Completar summary
         /// <summary>
         /// Permite crear un post con una imagen y definir si el post sera privado.
         /// <para><i>Nota: Al crearse un post, comienza sin ningún comentario</i></para>
         /// </summary>
-        public Post(string titulo, string contenido, Miembro autor, string imagen, bool privado = false) : base(titulo,contenido,autor)
+        /// <param name="titulo"></param>
+        /// <param name="contenido"></param>
+        /// <param name="autor"></param>
+        /// <param name="imagen">Guarda la imagen del post<para><i><b>Nota: </b>Actualmente solo se guarda el nombre de la imagen.</i></para></param>
+        /// <param name="privado">Permite definir si un post es publico(<c>false</c>) o privado(<c>true</c>)</param>
+        public Post(string titulo, string contenido, Miembro autor, string imagen, bool privado = true) : base(titulo,contenido,autor)
         {
             _imagen = imagen;
             _privado = privado;
@@ -45,48 +53,41 @@
             _censurado = false;
         }
 
-        //TODO revisar si aplica otro constructor
-        ///// <summary>
-        ///// Permite crear un post con una imagen y definir si el post sera privado.
-        ///// <para><i>Nota: Al crearse un post, comienza sin ningún comentario</i></para>
-        ///// </summary>
-        ///// <param name="image">
-        ///// Guarda la imagen del post
-        ///// <para><i><b>Nota: </b>Actualmente solo se guarda el nombre de la imagen.</i></para>
-        ///// </param>
-        ///// <param name="privado">
-        ///// Permite definir si un post es publico(<c>false</c>) o privado(<c>true</c>)
-        ///// </param>
-        //public Post(string titulo, Miembro autor, DateTime? fecha, string contenido, List<Reaccion> reacciones,string image, bool privado) : base()
-        //{
-        //    image ??= string.Empty;
-        //    _imagen = image;
-        //    _privado = privado;
-
-        //    //Al crear una post el mismo no deberia tener comentarios ni deberia estar censurado
-        //    _comentarios = new List<Comentario>();
-        //    _censurado = false;
-        //}
-
         #endregion
 
         #region Metodos
 
-        
-
         /// <summary>
         /// Permite agregar un <c>Comentario</c> a la lista de comentarios
         /// </summary>
-        /// <param name="comentario">
-        /// <c>Comentario</c> a agregar al <c>Post</c>
-        /// </param>
+        /// <param name="comentario"><c>Comentario</c> a agregar al <c>Post</c></param>
         public void AgregarComentario(Comentario comentario)
         {
-            //TODO: Logica para agregar un comentario al post
+            comentario.Validar();
+            _comentarios.Add(comentario);
         }
-        #endregion
 
-        #region Metodos sobreescritos
+        /// <summary>
+        /// Devuleve una copia de la lista de comentarios del <c>Post</c>
+        /// </summary>
+        /// <returns>Lista de <c>Comentario</c></returns>
+        public List<Comentario> DevolverListaComentarios()
+        {
+            //TODO: Devulver una lista copia de lso comentarios
+            return _comentarios;
+        }
+
+        public List<Comentario> DevolverComentariosDelMiembro(Miembro miembro) 
+        {
+            //TODO: Deve devolver una lista de lso comentarios que pertenecen al miembro
+            return null;
+        }
+
+        public int CompareTo(Post? other)
+        {
+            //TODO: Implementar la comparacion de Post por titulo en forma descendente
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

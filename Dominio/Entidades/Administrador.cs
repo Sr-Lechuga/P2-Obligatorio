@@ -11,11 +11,6 @@
         #endregion
 
         #region Metodos
-       
-        public Administrador ObtenerAdministrador()
-        {
-            new Administrador("karmen.bratislava@gmail.com", "soylakarmen");
-        }
 
         /// <summary>
         /// Permite a un <c>Administrador</c> bloquear a un miembro del sistema
@@ -23,7 +18,7 @@
         /// <param name="miembro"><c>Miembro</c> que el <c>Administrador</c> quiere bloquear</param>
         public void BloquearMiembro(Miembro miembro)
         {
-            //TODO: Logica para bloquear miembros
+            //NEXT: Segunda entrega
         }
 
         /// <summary>
@@ -32,7 +27,7 @@
         /// <param name="post"><c>Post</c> que el <c>Administrador</c> quiere censurar</param>
         public void CensurarPost(Post post)
         {
-            //TODO: Logica para censurar comentarios
+            //NEXT: Segunda entrega
         }
 
         //Override

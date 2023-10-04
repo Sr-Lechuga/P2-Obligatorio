@@ -28,14 +28,12 @@ namespace Dominio.Entidades
 
         #region Constructores
 
-        //Deshabilitacion de constructor por defecto, los usuarios siempre deben tener usuario y contrasenia
-        private Usuario() { }
-
         public Usuario(string email, string contrasenia)
         {
-            Email = email;
-            Contrasenia = contrasenia;
+            _email = email;
+            _contrasenia = contrasenia;
         }
+
         #endregion
 
         #region Metodos
@@ -62,6 +60,7 @@ namespace Dominio.Entidades
 
         private void ValidarContrasenia(string contrasenia)
         {
+            //TODO: Cambiar regex por otra logica
             Regex MayusculaRgx = new(@"[A-Z]{1}", RegexOptions.Compiled);
             Regex numeroRgx = new(@"[0-9]{1}", RegexOptions.Compiled);
             Regex simboloRgx = new(@"[\W]{1}", RegexOptions.Compiled);

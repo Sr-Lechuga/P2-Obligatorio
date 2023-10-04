@@ -4,10 +4,7 @@
     {
         #region Constructores
 
-        public Comentario(string titulo, string contenido, Miembro autor) : base(titulo,contenido,autor) 
-        { 
-            //TODO: Cheuqear quehaga el autoincremento de el constructor base
-        }
+        public Comentario(string titulo, string contenido, Miembro autor) : base(titulo, contenido, autor){}
 
         #endregion
 
@@ -17,10 +14,11 @@
         {
             //TODO: Lleva alguna validacion (?)
         }
-
-        private void ValidarVisibilidad()
+       
+        public bool PerteneceAlAutor(Miembro miembro)
         {
-            //TODO: Consultar, deberia ir en realidad en publicacion o en sistema o donde
+            //TODO: Logica para saber si un comentario pertence a un usuario, tal vez va en Publicacion(?)
+            return false;
         }
 
         #endregion

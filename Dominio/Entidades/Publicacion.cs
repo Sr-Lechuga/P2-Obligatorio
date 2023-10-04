@@ -60,7 +60,7 @@ namespace Dominio.Entidades
         /// </summary>
         /// <param name="titulo">Titulo de la publicacion <para><b>Precondicion: </b>Debe contener al menos 3 caracteres</para></param>
         /// <param name="autor">Miembro autor de la publicacion</param>
-        /// <param name="contenido">Contenido de la publicacion</param>
+        /// <param name="contenido">Contenido de la publicacion<b>Precondicion: </b>No puede ser vacio</para></param>
         public Publicacion(string titulo, string contenido, Miembro autor)
         {
             _id = s_ultId++;
@@ -73,14 +73,14 @@ namespace Dominio.Entidades
             _reacciones = new List<Reaccion>();
         }
 
-
-
         #endregion
 
         #region Metodos
 
         public void Validar()
         {
+            ValidarTitulo();
+            ValidarContenido();
         }
 
         private void EsReaccionUnica(Miembro miembro)
@@ -97,7 +97,6 @@ namespace Dominio.Entidades
         {
             //TODO: El contendio no puede ser vacio
         }
-        //TODO: Implementar los posibles metodos de una publicacion
 
         #endregion
     }

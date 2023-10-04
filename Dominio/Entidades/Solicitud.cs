@@ -47,12 +47,6 @@ namespace Dominio.Entidades
 
         #region Constructores
 
-        public Solicitud()
-        {
-            //TODO: Como hacer que no se pueda usar el constructor por default
-            _id = s_ultId++;
-        }
-
         public Solicitud (Miembro solicitante, Miembro solicitado)
         {
             _id = s_ultId++;
@@ -61,10 +55,7 @@ namespace Dominio.Entidades
             _solicitante = solicitante;
             _solicitado = solicitado;
 
-            _estado = new EstadoSolicitud();
             _estado = EstadoSolicitud.PENDIENTE_APROVACION;
-
-            _fechaSolicitud = new DateTime();
             _fechaSolicitud = DateTime.Now;
         }
 
@@ -74,17 +65,18 @@ namespace Dominio.Entidades
 
         public void Validar()
         {
-
+            ValidarSolicitante();
+            ValidarSolicitado();
         }
 
         public void ValidarSolicitante()
         {
-            //TODO: Validar que un miembro sea un objeto valido
+            //TODO: Validar que un miembro sea un objeto valido no vacio
         }
 
         public void ValidarSolicitado()
         {
-            //TODO: Validar que un miembro sea un objeto valido
+            //TODO: Validar que un miembro sea un objeto valido no vacio
         }
 
         #endregion
