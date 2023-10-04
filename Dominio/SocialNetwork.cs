@@ -15,6 +15,9 @@ namespace Dominio
             _miembros = new List<Miembro>();
             _relaciones = new List<Solicitud>();
             _posteos = new List<Post>();
+
+            PrecargaMiembros();
+            PrecargaPost();
         }
 
         //Propiedad para recuperar info de isntancia
@@ -37,7 +40,7 @@ namespace Dominio
         private List<Miembro> _miembros;
         private List<Solicitud> _relaciones;
         private List<Post> _posteos;
-        private Usuario _usuarioDeSesion;
+        private Usuario? _usuarioDeSesion;
         #endregion
 
         #region Propiedades
@@ -79,7 +82,6 @@ namespace Dominio
         {
             Miembro posteadorAleatorio;
             Miembro comentaristaAleatorio;
-            int indiceMiembroAleatorio;
 
             List<string> titulosPost = new List<string>
             {
@@ -127,10 +129,6 @@ namespace Dominio
                 "Amo la playa, así que mi lugar favorito es Bali. Las playas de arena blanca y los templos son mágicos. 🏖️🌴🕌",
             };
 
-
-
-
-
             for (int iPost = 0; iPost < titulosPost.Count; iPost++) /*iPost = {0,4}*/
             {
                 //Crear post
@@ -154,117 +152,177 @@ namespace Dominio
         #endregion
 
         #region Metodos
-            private Miembro DevolverMiembroAleatorio()
-            {
-                Random indiceRandom = new Random();
-                int indiceMiembroAleatorio = indiceRandom.Next(0, _miembros.Count);
 
-                return _miembros[indiceMiembroAleatorio];
-            }
-
-            public void ingresarSistema()
-            {
-                //TODO: como hacer para identificar si el usuario logueado es un administrador o es un miembro
-            }
-
-
-            public void AltaMiembro(Miembro miembro)
-            {
-                //TODO Cambiar la logica, para construir miembro y agregarlo
-                miembro.Validar();
-                _miembros.Add(miembro);
-            }
-
-            public void AltaAdmisitrador() { }
-
-
-            /// <summary>
-            /// Metodo que permite buscar un <c>Miembro</c> en el sistema
-            /// </summary>
-            /// <param name="email">
-            /// <c>Email</c> con el que se busca a un <c>Miembro</c>
-            /// </param>
-            /// <returns><c>Miembro</c></returns>
-            public Miembro BuscarMiembro(string nombre, string apellido)
-            {
-                foreach (Miembro miembro in _miembros)
-                {
-                    if (miembro.Nombre == nombre && miembro.Apellido == apellido)
-                        return miembro;
-                }
-                //Devuelve un miembro *** HASTA AHI LLEGUE
-                return null;
-            }
-
-            /// <summary>
-            /// Metodo que permite al <c>Administrador</c> bloquear un miembro
-            /// </summary>
-            /// <param name="miembro"><c>Miembro</c> a bloquear </param>
-            public void BloquearMiembro()
-            {
-
-            }
-
-            /// <summary>
-            /// Metodo que permite al <c>Administrador</c> censurar un comentario
-            /// </summary>
-            /// <param name="miembro"><c>Miembro</c> que realizo el comentario</param>
-            /// <param name="comentario"><c>Comentario</c> a censurar</param>
-            public void CensurarComentario(Comentario comentario) { }
-
-            /// <summary>
-            /// Metodo que permite gestionar una solicitud
-            /// </summary>
-            /// <param name="solicitud"> <c>Solicitud</c> que se va a gestionar </param>
-            public void GestionSolicitud(Solicitud solicitud) { }
-
-            /// <summary>
-            /// Metodo que permite actualizar las <c>Relaciones</c> entre los <c>Miembros</c>
-            /// </summary>
-            /// <param name="miembro"><c>Miemro</c> a actualizar</param>
-            public List<Solicitud> ActualizarAmigos(Miembro miembro) { return null; /*Devuelve lista miembros*/ }
-
-            /// <summary>
-            /// Metodo que muestra los <c>Miembros</c> disponibles para amistad
-            /// </summary>
-            /// <param name="miembro"><c>Miembro</c> al que se le mostrara la lista de amigos disponibles</param>
-            /// <returns>Lista de <c>Miembros</c></returns>
-            public List<Miembro> MostrarMiembrosDisponiblesParaAmistad() { return null; /*Devuleve lista de miembros*/ }
-
-            /// <summary>
-            /// Metodo que permite enviar una <c>Solicitud</c> de amistad
-            /// </summary>
-            /// <param name="miembro"><c>Miembro</c> al que se le enviara la solicitud</param>
-            public void EnviarSolicitud(Miembro miembro) { }
-
-            /// <summary>
-            /// Metodo que muestra a los amigos de un <c>Miembro</c>
-            /// </summary>
-            /// <param name="miembro"> <c>Miembro</c> al que se le mostrara la lista de <c>Miembros</c> que son sus amigos</param>
-            /// <returns>Lista de <c>Miembros</c></returns>
-            public List<Miembro> BuscarAmigos(Miembro miembro) { return null; /*Devuelve lista de miembros*/ }
-
-            /// <summary>
-            /// Metodo que devuelve una lista con todos los <c>Comentarios</c>
-            /// </summary>
-            /// <returns>Lista de <c>Comentarios</c></returns>
-            public List<Comentario> DevolverListaComentarios() { return null; /*Dvuelve la lista total de comentarios*/ }
-
-            /// <summary>
-            /// Metodo que devuelve una lista de todos los <c>Post</c> que ha realizado un <c>Miembro</c>
-            /// </summary>
-            /// <param name="miembro"></param>
-            /// <returns>Lista de <c>Post</c></returns>
-            public List<Post> DevolverListaPostPorMiembro(Miembro miembro) { return null; /*Devuelve una lista de post filtrada por miemro*/ }
-
-            /// <summary>
-            /// Metodo que devuelve una lista de todos los <c>Comentarios</c> que ha realizado un <c>Miembro</c>
-            /// </summary>
-            /// <param name="miembro"></param>
-            /// <returns>Lista de <c>Comentarios</c></returns>
-            //TODO: No deberiamos tener tambien una lista de comentarios por post?
-            public List<Comentario> DevolverListaComentarioPorMiembro(Miembro miembro) { return null; /*Devuelve una lista de comentarios de un miembro*/}
-            #endregion
-
+        public void AltaMiembro(string email, string contrasenia, string nombre,string apellido, DateTime fechaNacimiento)
+        {
+            //TODO Cambiar la logica, para construir miembro y agregarlo al sistema
+            miembro.Validar();
+            _miembros.Add(miembro);
         }
+
+        public List<Post> DevolverListaPostsDelMiembro(string emailMiembro)
+        {
+            List<Post> postDelMiembro = new List<Post>();
+
+            //TODO: Dado un email de un miembro, devolver la lista de Post del miembro en el sistema
+
+            return postDelMiembro;
+        }
+
+        public List<Comentario> DevolverListaComentariosDelMiembro(string emailMiembro)
+        {
+            List<Comentario> comentariosDelMiembro = new List<Comentario>();
+
+            //TODO: Dado un email de un miembro, devolver la lista de Comentarios del miembro en el sistema
+
+            return comentariosDelMiembro;
+        }
+
+        /// <summary>
+        /// Metodo que devuelve una lista de todos los <c>Post</c> en los que un <c>Miembro</c> realizo comentarios
+        /// </summary>
+        /// <param name="emailMiembro">Email que identifica unequivocamente al <c>Miembro</c> en el sistema</param>
+        /// <returns>Lista de <c>Post</c></returns>
+        public List<Post> DevolverListaPostComentadosPorMiembro(string emailMiembro)
+        {
+            //TODO: Dado el email de un miembro se devuelv euna lista de todos los Post donde realizo comentarios (se excpuyen los comentarios)
+            return null; /*Devuelve una lista de post filtrada por miembro*/
+        }
+
+        public List<Post> PostsRealizadosEntreFechas(DateTime comienzo, DateTime fin)
+        {
+            //TODO: Dadas dos fechas inclusive, listar todos los posts realizados. Si el texto supera los 50 caracteres, solo se muestran los primeros 50. No se muestran comentarios. Ordenados descendentemente
+            return null;
+        }
+
+        public List<Miembro> MiembrosConMasPublicaciones()
+        {
+            //TODO: Lista de los miembros con mas publicaciones de cualquier tipo. Si hay mas de un miembro con la misma cantidad, mostrarlos todos
+            return null;
+        }
+
+        /// <summary>
+        /// Dado un email, permite buscar un <c>Miembro</c> en el sistema
+        /// <para><i><b>Excepción - Si el email con el que se busca, no esta registrado en el sistema. Devuelve un error de miembro no encontrado</b></i></para>
+        /// </summary>
+        /// <param name="email">Email que identifica al usuario inequivocamente en el sistema</param>
+        /// <returns>Devuelve un <c>Miembro</c> del sistema si lo encuentra registrado</returns>
+        /// <exception cref="Exception"></exception>
+        public Miembro BuscarMiembro(string email)
+        {
+            int i = 0;
+            Miembro? miembro = null;
+            while (miembro != null && i < _miembros.Count)
+            {
+                if (_miembros[i].Equals(email))
+                    miembro = _miembros[i]; //TODO: Implementar el metodo Equals en Miembro para que compare por email
+                i++;
+            }
+
+            if (miembro == null)
+                throw new Exception($"El miembro con e-mail {email}, no se encuentra registrado en el sistema.");
+
+            return miembro;
+        }
+
+        #region Auxiliares
+
+        /// <summary>
+        /// Devulve un miembro aleatorio de los que estan registrados en el sistema
+        /// </summary>
+        /// <returns cref="Miembro"><c>Miembro</c> aleatorio.</returns>
+        private Miembro DevolverMiembroAleatorio()
+        {
+            Random indiceRandom = new Random();
+            int indiceMiembroAleatorio = indiceRandom.Next(0, _miembros.Count);
+
+            return _miembros[indiceMiembroAleatorio];
+        }
+
+        #endregion
+
+        #region Segunda entrega
+
+        public void AltaAdmisitrador(string email, string contrasenia)
+        {
+            //NEXT: Proxima entrega
+        }
+
+        public void BloquearMiembro()
+        {
+            //NEXT: Proxima entrega
+        }
+
+        public void CensurarComentario(Comentario comentario)
+        {
+            //NEXT: Proxima entrega
+        }
+
+
+        /// <summary>
+        /// Metodo que permite gestionar una solicitud
+        /// </summary>
+        /// <param name="solicitud"> <c>Solicitud</c> que se va a gestionar </param>
+        public void GestionSolicitud(Solicitud solicitud)
+        {
+            //NEXT: Proxima entrega
+        }
+
+        /// <summary>
+        /// Metodo que permite actualizar las <c>Relaciones</c> entre los <c>Miembros</c>
+        /// </summary>
+        /// <param name="email">Email del <c>Miembro</c> a actualizar su lista de amigos</param>
+        public List<Solicitud> ActualizarAmigos(string email)
+        {
+            //NEXT: Proxima entrega
+            return null; /*Devuelve lista miembros (amigos)*/
+        }
+
+        /// <summary>
+        /// Metodo que muestra los <c>Miembros</c> disponibles para amistad
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> al que se le mostrara la lista de amigos disponibles</param>
+        /// <returns>Lista de <c>Miembros</c></returns>
+        public List<Miembro> MostrarMiembrosDisponiblesParaAmistad() {
+            //NEXT: Proxima entrega
+            return null; /*Devuleve lista de miembros*/ 
+        }
+
+        /// <summary>
+        /// Metodo que permite enviar una <c>Solicitud</c> de amistad
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> al que se le enviara la solicitud</param>
+        public void EnviarSolicitud(Miembro miembro) 
+        {
+            //NEXT: Proxima entrega
+        }
+
+        /// <summary>
+        /// Metodo que devuelve una lista con todos los <c>Comentarios</c>
+        /// </summary>
+        /// <returns>Lista de <c>Comentarios</c></returns>
+        public List<Comentario> DevolverListaComentarios()
+        { 
+            //NEXT: Proxima entrega
+            return null; /*Dvuelve la lista total de comentarios*/ 
+        }
+
+        /// <summary>
+        /// Metodo que muestra a los amigos de un <c>Miembro</c>
+        /// </summary>
+        /// <param name="miembro"> <c>Miembro</c> al que se le mostrara la lista de <c>Miembros</c> que son sus amigos</param>
+        /// <returns>Lista de <c>Miembros</c></returns>
+        public List<Miembro> BuscarAmigos(Miembro miembro) 
+        { 
+            //NEXT: Proxima entrega
+            return null; /*Devuelve lista de miembros*/
+        }
+
+
+
+        #endregion
+
+        #endregion
+
     }
+}
