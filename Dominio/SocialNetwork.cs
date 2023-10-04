@@ -156,6 +156,7 @@ namespace Dominio
         public void AltaMiembro(string email, string contrasenia, string nombre,string apellido, DateTime fechaNacimiento)
         {
             //TODO Cambiar la logica, para construir miembro y agregarlo al sistema
+            Miembro miembro = new Miembro(email,contrasenia,nombre,apellido,fechaNacimiento);
             miembro.Validar();
             _miembros.Add(miembro);
         }
