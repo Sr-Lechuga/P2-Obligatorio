@@ -125,6 +125,11 @@ namespace Dominio.Entidades
             return $"Es el miembro: {Nombre},{Apellido}.";
         }
 
+        /// <summary>
+        /// Se compara la igualdad de los miembros segun su email
+        /// </summary>
+        /// <param name="other">Otro <c>Miembro</c> para comparar con el actual</param>
+        /// <returns></returns>
         public bool Equals(Miembro? other)
         {
             //Un miembro sera igual a otro si el email es el mismo

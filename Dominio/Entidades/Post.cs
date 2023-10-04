@@ -79,8 +79,15 @@
 
         public List<Comentario> DevolverComentariosDelMiembro(Miembro miembro) 
         {
-            //TODO: Deve devolver una lista de lso comentarios que pertenecen al miembro
-            return null;
+            List<Comentario> comentariosDelMiembro = new List<Comentario>();
+
+            foreach (Comentario comentario in _comentarios)
+            {
+                if(comentario.Autor.Equals(miembro))
+                    comentariosDelMiembro.Add(comentario);
+            }
+
+            return comentariosDelMiembro;
         }
 
         public int CompareTo(Post? other)

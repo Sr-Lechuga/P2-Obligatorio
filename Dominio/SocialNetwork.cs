@@ -197,28 +197,38 @@ namespace Dominio
 
         public void AltaMiembro(string email, string contrasenia, string nombre,string apellido, DateTime fechaNacimiento)
         {
-            //TODO Cambiar la logica, para construir miembro y agregarlo al sistema
             Miembro miembro = new Miembro(email,contrasenia,nombre,apellido,fechaNacimiento);
             miembro.Validar();
             _miembros.Add(miembro);
         }
 
-        public List<Post> DevolverListaPostsDelMiembro(string emailMiembro)
+        /// <summary>
+        /// Devuelve la lista de todas publicaciones dado el email de un <c>Miembro</c>. 
+        /// <para><i><b>Nota:</b> Las mismas pueden ser <c>Post</c> o <c>Comentarios</c></i></para>
+        /// <para><i><b>Excepción - Si el email con el que se busca, no esta registrado en el sistema. Devuelve un error de miembro no encontrado</b></i></para>
+        /// </summary>
+        /// <param name="emailMiembro">Email que identifica al usuario inequivocamente en el sistema</param>
+        /// <returns>Lista de publicaciones de un miembro en el sistema</returns>
+        /// <exception cref="Exception">Si no se encuentra el miembro en el sistema</exception>
+        public List<Publicacion> DevolverListaPostsDelMiembro(string emailMiembro)
         {
-            List<Post> postDelMiembro = new List<Post>();
+            List<Publicacion> publicacionesDelMiembro = new List<Publicacion>();    
+            Miembro miembro = BuscarMiembro(emailMiembro);
 
-            //TODO: Dado un email de un miembro, devolver la lista de Post del miembro en el sistema
+            foreach (Post post in _posteos)
+            {
+                if(post.Autor.Equals(miembro))
+                    publicacionesDelMiembro.Add(post);
+                
+                //Aunque el post no sea del miembro,el mismo lo puede haber comentado
+                List<Comentario> comentariosEnPostDelMiembro = post.DevolverComentariosDelMiembro(miembro);
+                foreach (Comentario comentario in comentariosEnPostDelMiembro)
+                {
+                    publicacionesDelMiembro.Add(comentario);
+                }
+            }
 
-            return postDelMiembro;
-        }
-
-        public List<Comentario> DevolverListaComentariosDelMiembro(string emailMiembro)
-        {
-            List<Comentario> comentariosDelMiembro = new List<Comentario>();
-
-            //TODO: Dado un email de un miembro, devolver la lista de Comentarios del miembro en el sistema
-
-            return comentariosDelMiembro;
+            return publicacionesDelMiembro;
         }
 
         /// <summary>
