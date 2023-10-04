@@ -93,6 +93,7 @@ namespace Dominio
         {
             Miembro posteadorAleatorio;
             Miembro comentaristaAleatorio;
+            Miembro reaccionadorAleatorio;
 
             List<string> titulosPost = new List<string>
             {
@@ -147,6 +148,15 @@ namespace Dominio
                 Post unPost = new Post(titulosPost[iPost], contenidosPost[iPost], posteadorAleatorio, $"c:/img/{imagenes[iPost]}.png", false);
                 unPost.Validar();
 
+                // Agrega reaccion a 2 Post
+
+                if (iPost == 0 || iPost == 1)
+                {
+                    reaccionadorAleatorio = DevolverMiembroAleatorio();
+                    Reaccion reaccion = new Reaccion(reaccionadorAleatorio, true);
+                    unPost.Reacciones.Add(reaccion);
+                }
+
                 //Agregarle comentarios
 
                 for (int iComentario = iPost * 3/*iPost={0,3,6,9,12}*/; iComentario < (iPost + 1) * 3/*iPost={3,6,9,12,15}*/; iComentario++)
@@ -154,6 +164,15 @@ namespace Dominio
                     comentaristaAleatorio = DevolverMiembroAleatorio();
                     Comentario comentario = new($"{comentaristaAleatorio.Nombre}:", contenidoComentario[iComentario], comentaristaAleatorio);
                     comentario.Validar();
+
+                    // Agrega reaccion a 2 Comentarios
+
+                    if (iComentario == 3 || iComentario == 9)
+                    {
+                        reaccionadorAleatorio = DevolverMiembroAleatorio();
+                        Reaccion reaccion = new Reaccion(reaccionadorAleatorio, true);
+                        comentario.Reacciones.Add(reaccion);
+                    }
                     unPost.AgregarComentario(comentario);
                 }
                 _posteos.Add(unPost);
@@ -162,17 +181,17 @@ namespace Dominio
         private void PrecargarSolicitudes()
         {
             Random random = new Random();
-            for (int i =0; i < _miembros.Count; i++)
+            for (int i = 0; i < _miembros.Count; i++)
             {
                 Miembro miembroSolicitante = _miembros[i];
-                for (int j =0; j < _miembros.Count; j++)
+                for (int j = 0; j < _miembros.Count; j++)
                 {
                     Miembro miembroSolicitado = _miembros[j];
-                    if(miembroSolicitante!= miembroSolicitado)
+                    if (miembroSolicitante != miembroSolicitado)
                     {
                         if (i == 0 || i == 1)
                         {
-                            Solicitud unaSolicitud = new Solicitud(miembroSolicitante,miembroSolicitado);
+                            Solicitud unaSolicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
                             EstadoSolicitud estadoAceptado = EstadoSolicitud.ACEPTADA;
                             unaSolicitud.Estado = estadoAceptado;
                             _relaciones.Add(unaSolicitud);
@@ -184,20 +203,18 @@ namespace Dominio
                             otraSolicitud.Estado = estadoAleatorio;
                             _relaciones.Add(otraSolicitud);
                         }
-                        
+
                     }
                 }
             }
         }
-
-
         #endregion
 
         #region Metodos
 
-        public void AltaMiembro(string email, string contrasenia, string nombre,string apellido, DateTime fechaNacimiento)
+        public void AltaMiembro(string email, string contrasenia, string nombre, string apellido, DateTime fechaNacimiento)
         {
-            Miembro miembro = new Miembro(email,contrasenia,nombre,apellido,fechaNacimiento);
+            Miembro miembro = new Miembro(email, contrasenia, nombre, apellido, fechaNacimiento);
             miembro.Validar();
             _miembros.Add(miembro);
         }
@@ -343,16 +360,17 @@ namespace Dominio
         /// </summary>
         /// <param name="miembro"><c>Miembro</c> al que se le mostrara la lista de amigos disponibles</param>
         /// <returns>Lista de <c>Miembros</c></returns>
-        public List<Miembro> MostrarMiembrosDisponiblesParaAmistad() {
+        public List<Miembro> MostrarMiembrosDisponiblesParaAmistad()
+        {
             //NEXT: Proxima entrega
-            return null; /*Devuleve lista de miembros*/ 
+            return null; /*Devuleve lista de miembros*/
         }
 
         /// <summary>
         /// Metodo que permite enviar una <c>Solicitud</c> de amistad
         /// </summary>
         /// <param name="miembro"><c>Miembro</c> al que se le enviara la solicitud</param>
-        public void EnviarSolicitud(Miembro miembro) 
+        public void EnviarSolicitud(Miembro miembro)
         {
             //NEXT: Proxima entrega
         }
@@ -362,9 +380,9 @@ namespace Dominio
         /// </summary>
         /// <returns>Lista de <c>Comentarios</c></returns>
         public List<Comentario> DevolverListaComentarios()
-        { 
+        {
             //NEXT: Proxima entrega
-            return null; /*Dvuelve la lista total de comentarios*/ 
+            return null; /*Dvuelve la lista total de comentarios*/
         }
 
         /// <summary>
@@ -372,8 +390,8 @@ namespace Dominio
         /// </summary>
         /// <param name="miembro"> <c>Miembro</c> al que se le mostrara la lista de <c>Miembros</c> que son sus amigos</param>
         /// <returns>Lista de <c>Miembros</c></returns>
-        public List<Miembro> BuscarAmigos(Miembro miembro) 
-        { 
+        public List<Miembro> BuscarAmigos(Miembro miembro)
+        {
             //NEXT: Proxima entrega
             return null; /*Devuelve lista de miembros*/
         }

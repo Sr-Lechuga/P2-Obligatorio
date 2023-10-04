@@ -86,6 +86,14 @@ namespace Dominio.Entidades
         {
             return $"El suaurio es {Email}";
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null||!(obj is Usuario otroUsuario))
+                return false;
+
+            return  this._email == otroUsuario._email;
+        }
         #endregion
     }
 }
