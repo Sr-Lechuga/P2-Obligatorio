@@ -64,7 +64,7 @@ namespace Dominio.Entidades
         {
             Regex MayusculaRgx = new(@"[A-Z]{1}", RegexOptions.Compiled);
             Regex numeroRgx = new(@"[0-9]{1}", RegexOptions.Compiled);
-            Regex simboloRgx = new(@"[\W\.]{1}", RegexOptions.Compiled);
+            Regex simboloRgx = new(@"[\W]{1}", RegexOptions.Compiled);
 
             //Retrieves a collection of matches with upper case letters
             MatchCollection match = MayusculaRgx.Matches(_contrasenia);

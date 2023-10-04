@@ -127,6 +127,7 @@ namespace Vista
             try
             {
                 sistema.AltaMiembro(nuevoMiembro);
+                Console.Write("\n¡Miembro agregado al sistema con exito!");
             }
             catch (Exception ex) 
             { 
