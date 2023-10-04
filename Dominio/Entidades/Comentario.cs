@@ -10,15 +10,9 @@
 
         #region Metodos
 
-        public void Validar()
-        {
-            //TODO: Lleva alguna validacion (?)
-        }
-       
         public bool PerteneceAlAutor(Miembro miembro)
         {
-            //TODO: Logica para saber si un comentario pertence a un usuario, tal vez va en Publicacion(?)
-            return false;
+            return _autor.Equals(miembro);
         }
 
         #endregion

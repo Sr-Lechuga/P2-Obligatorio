@@ -83,7 +83,7 @@
 
             foreach (Comentario comentario in _comentarios)
             {
-                if(comentario.Autor.Equals(miembro))
+                if(comentario.PerteneceAlAutor(miembro))
                     comentariosDelMiembro.Add(comentario);
             }
 
