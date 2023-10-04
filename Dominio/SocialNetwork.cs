@@ -1,4 +1,5 @@
 ﻿using Dominio.Entidades;
+using Dominio.Enum;
 
 namespace Dominio
 {
@@ -18,6 +19,8 @@ namespace Dominio
 
             PrecargaMiembros();
             PrecargaPost();
+            PrecargaAdministrador();
+            PrecargarSolicitudes();
         }
 
         //Propiedad para recuperar info de isntancia
@@ -77,8 +80,10 @@ namespace Dominio
 
             }
         }
-        private void PrecargaAdministrador(string email, string contrasenia)
+        private void PrecargaAdministrador()
         {
+            string email = "karmen.bratislava@gmail.com";
+            string contrasenia = "soylakarmen";
             Administrador unAdministrador = new Administrador(email, contrasenia);
             unAdministrador.Validar();
             _administradores.Add(unAdministrador);
@@ -154,6 +159,26 @@ namespace Dominio
                 _posteos.Add(unPost);
             }
         }
+        private void PrecargarSolicitudes()
+        {
+            Random random = new Random();
+            for (int i =0; i < _miembros.Count; i++)
+            {
+                Miembro miembroSolicitante = _miembros[i];
+                for (int j =0; j < _miembros.Count; j++)
+                {
+                    Miembro miembroSolicitado = _miembros[j];
+                    if(miembroSolicitante!= miembroSolicitado)
+                    {
+                        Solicitud solicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
+                        EstadoSolicitud estadoAleatorio = DevolverEstadoSolicitudAleatorio();
+                        solicitud.Estado = estadoAleatorio;
+                        _relaciones.Add(solicitud);
+                    }
+                }
+            }
+        }
+
 
         #endregion
 
@@ -246,6 +271,13 @@ namespace Dominio
             return _miembros[indiceMiembroAleatorio];
         }
 
+        private EstadoSolicitud DevolverEstadoSolicitudAleatorio()
+        {
+            Random random = new Random();
+            int valorAleatorio = random.Next(1, 4);
+            EstadoSolicitud estadoAleatorio = (EstadoSolicitud)valorAleatorio;
+            return estadoAleatorio;
+        }
         #endregion
 
         #region Segunda entrega

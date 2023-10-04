@@ -36,6 +36,7 @@ namespace Dominio.Entidades
         public EstadoSolicitud Estado
         {
             get { return _estado;}
+            set { _estado = value; }
         }
 
         public DateTime FechaSolicitud
