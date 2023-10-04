@@ -77,6 +77,12 @@ namespace Dominio
 
             }
         }
+        private void PrecargaAdministrador(string email, string contrasenia)
+        {
+            Administrador unAdministrador = new Administrador(email, contrasenia);
+            unAdministrador.Validar();
+            _administradores.Add(unAdministrador);
+        }
 
         private void PrecargaPost()
         {
