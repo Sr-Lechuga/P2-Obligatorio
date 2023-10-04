@@ -250,13 +250,22 @@ namespace Dominio
 
         /// <summary>
         /// Metodo que devuelve una lista de todos los <c>Post</c> en los que un <c>Miembro</c> realizo comentarios
+        /// <para><i><b>Excepción - Si el email con el que se busca, no esta registrado en el sistema. Devuelve un error de miembro no encontrado</b></i></para>
         /// </summary>
         /// <param name="emailMiembro">Email que identifica unequivocamente al <c>Miembro</c> en el sistema</param>
-        /// <returns>Lista de <c>Post</c></returns>
+        /// <returns>Lista de post comentados por el miembro</c></returns>
+        /// <exception cref="Exception">Si no se encuentra el miembro en el sistema</exception>
         public List<Post> DevolverListaPostComentadosPorMiembro(string emailMiembro)
         {
-            //TODO: Dado el email de un miembro se devuelv euna lista de todos los Post donde realizo comentarios (se excpuyen los comentarios)
-            return null; /*Devuelve una lista de post filtrada por miembro*/
+            List<Post> postComentadosPorMiembro = new List<Post>();
+            Miembro miembro = BuscarMiembro(emailMiembro);
+
+            foreach (Post post in _posteos)
+            {
+                if(post.DevolverComentariosDelMiembro(miembro).Count > 0)
+                    postComentadosPorMiembro.Add(post);
+            }
+            return postComentadosPorMiembro; 
         }
 
         public List<Post> PostsRealizadosEntreFechas(DateTime comienzo, DateTime fin)
