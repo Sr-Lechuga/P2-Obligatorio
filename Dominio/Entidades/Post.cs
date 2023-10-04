@@ -27,6 +27,7 @@
         public bool Censurado
         {
             get { return _censurado; }
+            // no deberiamos poner set tambien??
         }
         #endregion
 
@@ -70,6 +71,9 @@
         #endregion
 
         #region Metodos
+
+        
+
         /// <summary>
         /// Permite agregar un <c>Comentario</c> a la lista de comentarios
         /// </summary>

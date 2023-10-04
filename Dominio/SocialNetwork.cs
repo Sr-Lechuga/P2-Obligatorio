@@ -154,6 +154,37 @@ namespace Dominio
         #endregion
 
         #region Metodos
+        #region Precargas
+        public List<Miembro> ObtenerMiembros()
+        {
+            List<Miembro> miembrosPrecargados = new List<Miembro>
+            {
+                new Miembro("juan.perez@email.com", "contraseña123", "Juan", "Pérez", new DateTime(1990, 5, 15)),
+                new Miembro("maria.gonzalez@email.com", "clave456", "María", "González", new DateTime(1985, 9, 22)),
+                new Miembro("carlos.lopez@email.com", "password789", "Carlos", "López", new DateTime(1993, 3, 8)),
+                new Miembro("laura.martinez@email.com", "secret123", "Laura", "Martínez", new DateTime(1988, 7, 12)),
+                new Miembro("andres.fernandez@email.com", "qwerty456", "Andrés", "Fernández", new DateTime(1982, 11, 3)),
+                new Miembro("ana.rodriguez@email.com", "secure789", "Ana", "Rodríguez", new DateTime(1995, 2, 28)),
+                new Miembro("david.gomez@email.com", "pass1234", "David", "Gómez", new DateTime(1987, 12, 17)),
+                new Miembro("natalia.diaz@email.com", "mypassword", "Natalia", "Díaz", new DateTime(1991, 6, 9)),
+                new Miembro("sergio.hernandez@email.com", "access567", "Sergio", "Hernández", new DateTime(1986, 4, 5)),
+                new Miembro("elena.lopez@email.com", "testuser", "Elena", "López", new DateTime(1998, 8, 20))
+            }
+            return miembrosPrecargados
+        }
+
+        public List<Post> ObtenerPost()
+        {
+            List<Post> posts = new List<Post>;
+
+            string titulo = "Cancion favorita";
+            string contenido = "¿Cuál es tu canción favorita de todos los tiempos? " +
+                               "La música nos conecta de formas increíbles." +
+                               " ¡Comparte tu elección y cuéntanos por qué te gusta tanto!"
+
+            Random random1 = new Random();
+            Miembro indiceAleatorio1 = random1.Next(0, _miembros.length);
+            Miembros miembroAleatorio = _miembros[indiceAleatorio1];
 
         private Miembro DevolverMiembroAleatorio()
         {
@@ -186,13 +217,24 @@ namespace Dominio
         /// <c>Email</c> con el que se busca a un <c>Miembro</c>
         /// </param>
         /// <returns><c>Miembro</c></returns>
-        public Miembro BuscarMiembro() { return null; /*Devuelve un miembro*/}
+        public Miembro BuscarMiembro(string nombre, string apellido) 
+        {
+            foreach(Miembro miembro in  _miembros)
+            {
+                if (miembro.Nombre == nombre && miembro.Apellido == apellido)
+                    return miembro;
+            }
+            //Devuelve un miembro *** HASTA AHI LLEGUE
+        }
 
         /// <summary>
         /// Metodo que permite al <c>Administrador</c> bloquear un miembro
         /// </summary>
         /// <param name="miembro"><c>Miembro</c> a bloquear </param>
-        public void BloquearMiembro() { }
+        public void BloquearMiembro() 
+        {
+        
+        }
 
         /// <summary>
         /// Metodo que permite al <c>Administrador</c> censurar un comentario

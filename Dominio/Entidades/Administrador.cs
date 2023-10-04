@@ -11,6 +11,11 @@
         #endregion
 
         #region Metodos
+       
+        public Administrador ObtenerAdministrador()
+        {
+            new Administrador("karmen.bratislava@gmail.com", "soylakarmen");
+        }
 
         /// <summary>
         /// Permite a un <c>Administrador</c> bloquear a un miembro del sistema

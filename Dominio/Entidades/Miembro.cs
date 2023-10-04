@@ -41,7 +41,7 @@
         #endregion
 
         #region Constructores
-        public Miembro(string email,string contrasenia) : base(email,contrasenia)
+        public Miembro(string email, string contrasenia) : base(email, contrasenia)
         {
 
         }
@@ -56,7 +56,7 @@
             _nombre = nombre;
             _apellido = apellido;
 
-            if (fechaNacimiento == null) 
+            if (fechaNacimiento == null)
                 _fechaNacimiento = DateTime.MinValue;
             else
                 _fechaNacimiento = (DateTime)fechaNacimiento;
@@ -67,6 +67,8 @@
         #endregion
 
         #region Metodos
+
+       
 
         public override void Validar()
         {
