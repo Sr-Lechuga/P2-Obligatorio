@@ -44,12 +44,19 @@ namespace Dominio.Entidades
 
         #region Constructores
         
-        //TODO: Sumary
+        /// <summary>
+        /// Constructor de un <c>Miembro</c>
+        /// </summary>
+        /// <param name="email">Email que sera el identificador del usuario en el sistema</param>
+        /// <param name="contrasenia">Palabra clave con la que accede al sitio</param>
+        /// <param name="nombre">Nombre del usuario</param>
+        /// <param name="apellido">Apellido del usuario</param>
+        /// <param name="fechaNacimiento">Fecha de naciemiento del usuario en formato DD/MM/YYYY</param>
         public Miembro(string email,string contrasenia,string nombre,string apellido, DateTime fechaNacimiento) : base(email, contrasenia)
         {
             _nombre = nombre; 
             _apellido = apellido; 
-            _fechaNacimiento = (DateTime)fechaNacimiento;
+            _fechaNacimiento = fechaNacimiento;
 
             _bloqueado = false;
         }

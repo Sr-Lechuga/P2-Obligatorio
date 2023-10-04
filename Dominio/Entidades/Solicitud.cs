@@ -52,7 +52,6 @@ namespace Dominio.Entidades
         {
             _id = s_ultId++;
 
-            //TODO: Validar que los atributos solicitado y solicitante no sean nulos
             _solicitante = solicitante;
             _solicitado = solicitado;
 
@@ -72,12 +71,12 @@ namespace Dominio.Entidades
 
         public void ValidarSolicitante()
         {
-            //TODO: Validar que un miembro sea un objeto valido no vacio
+            //NEXT: Segunda entrega
         }
 
         public void ValidarSolicitado()
         {
-            //TODO: Validar que un miembro sea un objeto valido no vacio
+            //NEXT: Segunda entrega
         }
 
         #endregion

@@ -34,14 +34,15 @@
         #endregion
 
         #region Constructores
-        //TODO: Completar summary
         /// <summary>
         /// Permite crear un post con una imagen y definir si el post sera privado.
         /// <para><i>Nota: Al crearse un post, comienza sin ningún comentario</i></para>
+        /// <para><i><b>Importante: </b>El titulo de un <c>Post</c> no puede ser vacio. Y debe contener al menos 3 caracteres.</i></para>
+        /// <para><i><b>Importante: </b>El contenido de un <c>Post</c> no puede ser vacio.</i></para>
         /// </summary>
-        /// <param name="titulo"></param>
-        /// <param name="contenido"></param>
-        /// <param name="autor"></param>
+        /// <param name="titulo">Titulo del post <b>No puede ser vacio. Debe contener al menos 3 caracteres</b></param>
+        /// <param name="contenido">Contenido del post <b>No puede ser vacio</b></param>
+        /// <param name="autor"><c>Miembro</c> autor del <c>Post</c></param>
         /// <param name="imagen">Guarda la imagen del post<para><i><b>Nota: </b>Actualmente solo se guarda el nombre de la imagen.</i></para></param>
         /// <param name="privado">Permite definir si un post es publico(<c>false</c>) o privado(<c>true</c>)</param>
         public Post(string titulo, string contenido, Miembro autor, string imagen, bool privado = true) : base(titulo,contenido,autor)
