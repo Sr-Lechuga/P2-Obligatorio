@@ -148,7 +148,7 @@ namespace Dominio
                 Post unPost = new Post(titulosPost[iPost], contenidosPost[iPost], posteadorAleatorio, $"c:/img/{imagenes[iPost]}.png", false);
                 unPost.Validar();
 
-                // Agregar reaccion a 2 Post
+                // Agrega reaccion a 2 Post
 
                 if (iPost == 0 || iPost == 1)
                 {
@@ -165,7 +165,7 @@ namespace Dominio
                     Comentario comentario = new($"{comentaristaAleatorio.Nombre}:", contenidoComentario[iComentario], comentaristaAleatorio);
                     comentario.Validar();
 
-                    // Agregar reaccion a 2 Comentarios
+                    // Agrega reaccion a 2 Comentarios
 
                     if (iComentario == 3 || iComentario == 9)
                     {
@@ -208,15 +208,12 @@ namespace Dominio
                 }
             }
         }
-
-
         #endregion
 
         #region Metodos
 
         public void AltaMiembro(string email, string contrasenia, string nombre, string apellido, DateTime fechaNacimiento)
         {
-            //TODO Cambiar la logica, para construir miembro y agregarlo al sistema
             Miembro miembro = new Miembro(email, contrasenia, nombre, apellido, fechaNacimiento);
             miembro.Validar();
             _miembros.Add(miembro);
@@ -227,6 +224,7 @@ namespace Dominio
             List<Post> postDelMiembro = new List<Post>();
 
             //TODO: Dado un email de un miembro, devolver la lista de Post del miembro en el sistema
+           
 
             return postDelMiembro;
         }
@@ -278,6 +276,7 @@ namespace Dominio
             {
                 if (_miembros[i].Equals(email))
                     miembro = _miembros[i]; //TODO: Implementar el metodo Equals en Miembro para que compare por email
+                                            // Se implemento el oberride de Equals en usuario que es quien tiene el email
                 i++;
             }
 
