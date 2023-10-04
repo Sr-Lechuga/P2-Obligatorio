@@ -171,6 +171,7 @@ namespace Dominio
 
         public void AltaMiembro(Miembro miembro)
         {
+            //TODO Cambiar la logica, para construir miembro y agregarlo
             miembro.Validar();
             _miembros.Add(miembro);
         }
