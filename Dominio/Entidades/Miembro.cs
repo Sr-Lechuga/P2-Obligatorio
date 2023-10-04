@@ -2,7 +2,7 @@
 
 namespace Dominio.Entidades
 {
-    public class Miembro : Usuario
+    public class Miembro : Usuario, IEquatable<Miembro>
     {
         #region Atributos
 
@@ -124,6 +124,13 @@ namespace Dominio.Entidades
         {
             return $"Es el miembro: {Nombre},{Apellido}.";
         }
+
+        public bool Equals(Miembro? other)
+        {
+            //Un miembro sera igual a otro si el email es el mismo
+            return other is Miembro otroMiembro && this.Email == otroMiembro.Email;
+        }
+
 
         #endregion
     }

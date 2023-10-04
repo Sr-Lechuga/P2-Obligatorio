@@ -19,7 +19,7 @@ namespace Dominio
 
             PrecargaMiembros();
             PrecargaPost();
-            PrecargaAdministrador();
+            PrecargaAdministradores();
             PrecargarSolicitudes();
         }
 
@@ -80,7 +80,7 @@ namespace Dominio
 
             }
         }
-        private void PrecargaAdministrador()
+        private void PrecargaAdministradores()
         {
             string email = "karmen.bratislava@gmail.com";
             string contrasenia = "soylakarmen";
@@ -258,7 +258,7 @@ namespace Dominio
             while (miembro != null && i < _miembros.Count)
             {
                 if (_miembros[i].Equals(email))
-                    miembro = _miembros[i]; //TODO: Implementar el metodo Equals en Miembro para que compare por email
+                    miembro = _miembros[i];
                 i++;
             }
 
