@@ -268,10 +268,33 @@ namespace Dominio
             return postComentadosPorMiembro; 
         }
 
+        /// <summary>
+        /// Devuelve una lista de los <c>Post</c> realizados entre la fecha definida para el comienzo y la definida para el final.
+        /// Ordenda descendentemente por el titulo de los <c>Post</c>
+        /// <para><i><b>Nota: </b>La lista no muestra los comentarios</i></para>
+        /// <para><i><b>Nota: </b>Si el contenido de los <c>Post</c> supera los 50 caracteres, solo se mostraran los primeros 50</i></para>
+        /// </summary>
+        /// <param name="comienzo">Fecha desde la que comienza la busqueda de <c>Post</c></param>
+        /// <param name="fin">Fecha en la que finaliza la busqueda de <c>Post</c></param>
+        /// <returns>Una lista de Post entre fechas</returns>
         public List<Post> PostsRealizadosEntreFechas(DateTime comienzo, DateTime fin)
         {
-            //TODO: Dadas dos fechas inclusive, listar todos los posts realizados. Si el texto supera los 50 caracteres, solo se muestran los primeros 50. No se muestran comentarios. Ordenados descendentemente
-            return null;
+            List<Post> postEntreFechas = new List<Post>();
+
+            foreach (Post post in _posteos)
+            {
+                if(comienzo < post.Fecha && post.Fecha < fin)
+                {
+                    Post copiaPost = new(post.Titulo, post.Contenido[..50], post.Autor, post.Image, post.Privado)
+                    {
+                        Censurado = post.Censurado
+                    };
+                    postEntreFechas.Add(copiaPost);
+                }
+            }
+            postEntreFechas.Sort();
+
+            return postEntreFechas;
         }
 
         public List<Miembro> MiembrosConMasPublicaciones()

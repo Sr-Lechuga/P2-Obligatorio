@@ -29,7 +29,7 @@
         public bool Censurado
         {
             get { return _censurado; }
-            // no deberiamos poner set tambien??
+            set { _censurado = value; }
         }
         #endregion
 
@@ -92,8 +92,7 @@
 
         public int CompareTo(Post? other)
         {
-            //TODO: Implementar la comparacion de Post por titulo en forma descendente
-            throw new NotImplementedException();
+            return -1 * this.Titulo.CompareTo(other.Titulo);
         }
         #endregion
     }
