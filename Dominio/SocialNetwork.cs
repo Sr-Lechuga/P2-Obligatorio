@@ -170,10 +170,21 @@ namespace Dominio
                     Miembro miembroSolicitado = _miembros[j];
                     if(miembroSolicitante!= miembroSolicitado)
                     {
-                        Solicitud solicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
-                        EstadoSolicitud estadoAleatorio = DevolverEstadoSolicitudAleatorio();
-                        solicitud.Estado = estadoAleatorio;
-                        _relaciones.Add(solicitud);
+                        if (i == 0 || i == 1)
+                        {
+                            Solicitud unaSolicitud = new Solicitud(miembroSolicitante,miembroSolicitado);
+                            EstadoSolicitud estadoAceptado = EstadoSolicitud.ACEPTADA;
+                            unaSolicitud.Estado = estadoAceptado;
+                            _relaciones.Add(unaSolicitud);
+                        }
+                        else
+                        {
+                            Solicitud otraSolicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
+                            EstadoSolicitud estadoAleatorio = DevolverEstadoSolicitudAleatorio();
+                            otraSolicitud.Estado = estadoAleatorio;
+                            _relaciones.Add(otraSolicitud);
+                        }
+                        
                     }
                 }
             }
