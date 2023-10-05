@@ -170,6 +170,7 @@ namespace Dominio
 
                     // Agrega reaccion a 2 Comentarios
 
+                    //Post[1], Comentario[0] y Post[3],Comentario[0] 
                     if (iComentario == 3 || iComentario == 9)
                     {
                         reaccionadorAleatorio = SeleccionarMiembroAleatorio();

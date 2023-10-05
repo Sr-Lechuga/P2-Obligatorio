@@ -3,6 +3,7 @@ using Dominio.Entidades;
 using Dominio.ExcepcionesPersonalizadas;
 using System.Data;
 using System.Globalization;
+using System.Text;
 
 namespace Vista
 {
@@ -10,6 +11,9 @@ namespace Vista
     {
         static void Main(string[] args)
         {
+            //Comentarios con emojis
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+
             //Definimos la cultura como la de uruguay para no tener problemas con la fecha
             CultureInfo culturaUruaguaya = new CultureInfo("es-UY");
             CultureInfo.DefaultThreadCurrentCulture = culturaUruaguaya;
@@ -45,16 +49,10 @@ namespace Vista
                         return;
                     }
 
-                    if (!exito)
-                    {
-                        break;
-                    }
-                    else
-                    {
+                    if (exito)
                         Enrutamiento(opcion);
-                        break;
-                    }
 
+                    break;
                 }
 
             }
@@ -62,7 +60,7 @@ namespace Vista
         }
 
         /// <summary>
-        /// Dado un array de opciones, muestra en consola todas las opciones disponibles en formato 'posicion.descripcion'
+        /// Dada una lista de opciones, muestra en consola todas las opciones disponibles en formato 'posicion) descripcion'
         /// <para><i><b>Nota:</b> el menu de opciones dibujado contiene un salto de pagina al comienzo y otro al final.</i></para>
         /// </summary>
         /// <param name="opciones">Contiene la descripcion de todas las opciones disponibles para el menu</param>
@@ -133,6 +131,7 @@ namespace Vista
             {
                 sistema.AltaMiembro(nuevoMiembro);
                 Console.Write("\n¡Miembro agregado al sistema con éxito!");
+                Console.ReadKey();
             }
             catch (Exception ex)
             {
@@ -181,12 +180,20 @@ namespace Vista
             }
 
             Console.WriteLine("\n\n** Posteos del miembro buscado **" + "\n");
+
+            if (posteosDelMiembro.Count == 0)
+                Console.WriteLine($"El miembro {emailMiembroBuscado} no ha realizado ningun Post");
+
             foreach (Post posteo in posteosDelMiembro)
             {
                 Console.WriteLine(posteo.ToString() + "\n");
             }
 
             Console.WriteLine("\n** Comentarios del miembro buscado **" + "\n");
+
+            if (comentariosDelMiembro.Count == 0)
+                Console.WriteLine($"El miembro {emailMiembroBuscado} no ha realizado ningun Comentario");
+
             foreach (Comentario comentario in comentariosDelMiembro)
             {
                 Console.WriteLine(comentario + "\n");
@@ -209,6 +216,10 @@ namespace Vista
                 List<Post> postComentadosPorMiembro = sistema.DevolverListaPostComentadosPorMiembro(emailMiembroBuscado);
 
                 Console.WriteLine("\n** El miembro buscado ha comentado los siguientes posts. **\n\n");
+
+                if (postComentadosPorMiembro.Count == 0)
+                    Console.WriteLine($"El miembro {emailMiembroBuscado} no ha comentado ningun Post");
+
                 foreach (Post posteo in postComentadosPorMiembro)
                 {
                     Console.WriteLine(posteo + "\n");
@@ -233,7 +244,7 @@ namespace Vista
 
             Console.Write("Fecha fin (DD/MM/AAAA):");
             DateTime fechaFin = ObtenerFechaIngresada("Fecha fin (DD/MM/AAAA):");
-            
+
             if (fechaFin < fechaComienzo) //TODO chequear si es referencia o valor
             {
                 DateTime fechaAux = fechaFin;
@@ -243,7 +254,10 @@ namespace Vista
 
             List<Post> postEntreFechas = sistema.PostsRealizadosEntreFechas(fechaComienzo, fechaFin);
             Console.WriteLine("\n** Los posteos realizados entre las fechas ingresadas son los siguientes **\n\n");
-            
+
+            if (postEntreFechas.Count == 0)
+                Console.WriteLine($"No hay post entre las fechas {fechaComienzo} y {fechaComienzo}");
+
             foreach (Post posteo in postEntreFechas)
             {
                 Console.WriteLine($"ID: {posteo.Id}\nFecha: {posteo.Fecha}\nTitulo: {posteo.Titulo}\nContenido: {posteo.Contenido.Substring(0, 50)}");
@@ -261,17 +275,20 @@ namespace Vista
             try
             {
 
-            List<Miembro> miembrosMasPublicaciones = sistema.MiembrosConMasPublicaciones();
+                List<Miembro> miembrosMasPublicaciones = sistema.MiembrosConMasPublicaciones();
 
-            foreach (Miembro miembro in miembrosMasPublicaciones)
-            {
-                string miembroBloqueado = "";
-                if (miembro.Bloqueado)
-                    miembroBloqueado = "El miembro se encuentra bloqueado";
-                else
-                    miembroBloqueado = "El miembro no se encuentra bloqueado";
-                Console.WriteLine($"Nombre: {miembro.Nombre} | Apellido: {miembro.Apellido} | Fecha de nacimiento: {miembro.FechaNacimiento} | Bloqueo: {miembroBloqueado}");
-            }
+                if (miembrosMasPublicaciones.Count == 0)
+                    Console.WriteLine("No hay miembros con publicaciones realizadas en el sistema");
+
+                foreach (Miembro miembro in miembrosMasPublicaciones)
+                {
+                    string miembroBloqueado = "";
+                    if (miembro.Bloqueado)
+                        miembroBloqueado = "El miembro se encuentra bloqueado";
+                    else
+                        miembroBloqueado = "El miembro no se encuentra bloqueado";
+                    Console.WriteLine($"Email: {miembro.Email}\nNombre: {miembro.Nombre}\nApellido: {miembro.Apellido}\nFecha de nacimiento: {miembro.FechaNacimiento}\nBloqueo: {miembroBloqueado}\n");
+                }
             }
             catch (Exception ex)
             {
