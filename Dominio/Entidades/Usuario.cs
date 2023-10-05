@@ -22,7 +22,6 @@ namespace Dominio.Entidades
         {
             //Dado que se puede cambiar la constraseña, se debe poder settear
             get { return _contrasenia; }
-            set { _contrasenia = value; }
         }
         #endregion
 
@@ -50,33 +49,40 @@ namespace Dominio.Entidades
         /// <exception cref="Exception"></exception>
         private void ValidarEmail(string email)
         {
+
             if (email.Equals(string.Empty))
                 throw new Exception($"El email ingresado no puede ser vacio");
             if (!email.Contains('@'))
                 throw new Exception($"El email ingresado: {email}, no contiene @");
+            if (email[0] == '@' || email[email.Length - 1] == '@')
+                throw new Exception("El arroba no puede estar al comienzo ni al final del mail");
             if (!email.Contains('.'))
                 throw new Exception($"El email ingresado: {email}, no contiene dominio");
+            if (email.Length < 5)
+                throw new Exception("El email debe contener al menos 5 caracteres");/*minimo: a@a.a*/
         }
 
         private void ValidarContrasenia(string contrasenia)
         {
-            //TODO: Cambiar regex por otra logica
-            Regex MayusculaRgx = new(@"[A-Z]{1}", RegexOptions.Compiled);
-            Regex numeroRgx = new(@"[0-9]{1}", RegexOptions.Compiled);
-            Regex simboloRgx = new(@"[\W]{1}", RegexOptions.Compiled);
+            //Regex MayusculaRgx = new(@"[A-Z]{1}", RegexOptions.Compiled);
+            //Regex numeroRgx = new(@"[0-9]{1}", RegexOptions.Compiled);
+            //Regex simboloRgx = new(@"[\W]{1}", RegexOptions.Compiled);
 
             //Retrieves a collection of matches with upper case letters
-            MatchCollection match = MayusculaRgx.Matches(_contrasenia);
-            if (match.Count < 1)
-                throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
+            //MatchCollection match = MayusculaRgx.Matches(_contrasenia);
+            //if (match.Count < 1)
+            //    throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
 
-            match = numeroRgx.Matches(_contrasenia);
-            if (match.Count < 1)
-                throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
+            //match = numeroRgx.Matches(_contrasenia);
+            //if (match.Count < 1)
+            //    throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
 
-            match = simboloRgx.Matches(_contrasenia);
-            if (match.Count < 1)
-                throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
+            //match = simboloRgx.Matches(_contrasenia);
+            //if (match.Count < 1)
+            //    throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
+
+            if (contrasenia.Length < 8) /*Charla con profe 04/10*/
+                throw new Exception("La constrasenia debe contener al menos 8 caracteres");
 
         }
         #endregion

@@ -75,18 +75,12 @@ namespace Dominio
 
             foreach (Miembro nuevoMiembro in miembrosPrecargados)
             {
-                nuevoMiembro.Validar();
-                _miembros.Add(nuevoMiembro);
-
+                AltaMiembro(nuevoMiembro);
             }
         }
         private void PrecargaAdministradores()
         {
-            string email = "karmen.bratislava@gmail.com";
-            string contrasenia = "soylakarmen";
-            Administrador unAdministrador = new Administrador(email, contrasenia);
-            unAdministrador.Validar();
-            _administradores.Add(unAdministrador);
+            AltaAdmisitrador(new Administrador("karmen.bratislava@gmail.com", "soylakarmen"));
         }
 
         private void PrecargaPost()
@@ -187,20 +181,20 @@ namespace Dominio
                 for (int j = 0; j < _miembros.Count; j++)
                 {
                     Miembro miembroSolicitado = _miembros[j];
-                    if (miembroSolicitante != miembroSolicitado)
+                    if (!miembroSolicitante.Equals(miembroSolicitado))
                     {
                         if (i == 0 || i == 1)
                         {
                             Solicitud unaSolicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
                             EstadoSolicitud estadoAceptado = EstadoSolicitud.ACEPTADA;
-                            unaSolicitud.Estado = estadoAceptado;
+                            unaSolicitud.CambiarEstado(estadoAceptado);
                             _relaciones.Add(unaSolicitud);
                         }
                         else
                         {
                             Solicitud otraSolicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
                             EstadoSolicitud estadoAleatorio = DevolverEstadoSolicitudAleatorio();
-                            otraSolicitud.Estado = estadoAleatorio;
+                            otraSolicitud.CambiarEstado(estadoAleatorio);
                             _relaciones.Add(otraSolicitud);
                         }
 
@@ -212,10 +206,13 @@ namespace Dominio
 
         #region Metodos
 
-        public void AltaMiembro(string email, string contrasenia, string nombre, string apellido, DateTime fechaNacimiento)
+        public void AltaMiembro(Miembro miembro)
         {
-            Miembro miembro = new Miembro(email, contrasenia, nombre, apellido, fechaNacimiento);
             miembro.Validar();
+
+            if (_miembros.Contains(miembro))
+                throw new Exception($"El miembro {miembro.Email} ya esta registrado en el sistema");
+
             _miembros.Add(miembro);
         }
 
@@ -227,16 +224,16 @@ namespace Dominio
         /// <param name="emailMiembro">Email que identifica al usuario inequivocamente en el sistema</param>
         /// <returns>Lista de publicaciones de un miembro en el sistema</returns>
         /// <exception cref="Exception">Si no se encuentra el miembro en el sistema</exception>
-        public List<Publicacion> DevolverListaPostsDelMiembro(string emailMiembro)
+        public List<Publicacion> DevolverListaPublicacionesDelMiembro(string emailMiembro)
         {
-            List<Publicacion> publicacionesDelMiembro = new List<Publicacion>();    
+            List<Publicacion> publicacionesDelMiembro = new List<Publicacion>();
             Miembro miembro = BuscarMiembro(emailMiembro);
 
             foreach (Post post in _posteos)
             {
-                if(post.Autor.Equals(miembro))
+                if (post.Autor.Equals(miembro))
                     publicacionesDelMiembro.Add(post);
-                
+
                 //Aunque el post no sea del miembro,el mismo lo puede haber comentado
                 List<Comentario> comentariosEnPostDelMiembro = post.DevolverComentariosDelMiembro(miembro);
                 foreach (Comentario comentario in comentariosEnPostDelMiembro)
@@ -262,10 +259,10 @@ namespace Dominio
 
             foreach (Post post in _posteos)
             {
-                if(post.DevolverComentariosDelMiembro(miembro).Count > 0)
+                if (post.DevolverComentariosDelMiembro(miembro).Count > 0)
                     postComentadosPorMiembro.Add(post);
             }
-            return postComentadosPorMiembro; 
+            return postComentadosPorMiembro;
         }
 
         /// <summary>
@@ -283,9 +280,9 @@ namespace Dominio
 
             foreach (Post post in _posteos)
             {
-                if(comienzo < post.Fecha && post.Fecha < fin)
+                if (comienzo <= post.Fecha && post.Fecha <= fin)
                 {
-                    Post copiaPost = new(post.Titulo, post.Contenido[..50], post.Autor, post.Image, post.Privado)
+                    Post copiaPost = new(post.Titulo, post.Contenido, post.Autor, post.Image, post.Privado)
                     {
                         Censurado = post.Censurado
                     };
@@ -299,9 +296,25 @@ namespace Dominio
 
         public List<Miembro> MiembrosConMasPublicaciones()
         {
-            //TODO: Lista de los miembros con mas publicaciones de cualquier tipo.
-            //Si hay mas de un miembro con la misma cantidad, mostrarlos todos
-            return null;
+            int maxPublicaciones = 0;
+            List<Miembro> miembosConMasPublicaciones = new List<Miembro>();
+
+            foreach (Miembro miembro in _miembros)
+            {
+                List<Publicacion> publicacionesMiembro = DevolverListaPublicacionesDelMiembro(miembro.Email);
+                if (publicacionesMiembro.Count > maxPublicaciones)
+                {
+                    miembosConMasPublicaciones.Clear();
+                    miembosConMasPublicaciones.Add(miembro);
+                    maxPublicaciones = publicacionesMiembro.Count;
+                }
+                else if (publicacionesMiembro.Count == maxPublicaciones)
+                {
+                    miembosConMasPublicaciones.Add(miembro);
+                }
+            }
+
+            return miembosConMasPublicaciones;
         }
 
         /// <summary>
@@ -337,7 +350,7 @@ namespace Dominio
         private Miembro DevolverMiembroAleatorio()
         {
             Random indiceRandom = new Random();
-            int indiceMiembroAleatorio = indiceRandom.Next(0, _miembros.Count);
+            int indiceMiembroAleatorio = indiceRandom.Next(_miembros.Count);
 
             return _miembros[indiceMiembroAleatorio];
         }
@@ -353,9 +366,14 @@ namespace Dominio
 
         #region Segunda entrega
 
-        public void AltaAdmisitrador(string email, string contrasenia)
+        public void AltaAdmisitrador(Administrador administrador)
         {
-            //NEXT: Proxima entrega
+            administrador.Validar();
+
+            if (_administradores.Contains(administrador))
+                throw new Exception($"El administrador {administrador.Email} ya esta registrado en el sistema");
+
+            _administradores.Add(administrador);
         }
 
         public void BloquearMiembro()

@@ -19,19 +19,16 @@ namespace Dominio.Entidades
         {
             get { return _nombre; }
             //El nombre se puede cambiar
-            set { _nombre = value; }
         }
 
         public string Apellido
         {
             get { return _apellido; }
-            set { _apellido = value; }
         }
 
         public DateTime FechaNacimiento
         {
             get { return _fechaNacimiento; }
-            set { _fechaNacimiento = value; }
         }
 
         public bool Bloqueado

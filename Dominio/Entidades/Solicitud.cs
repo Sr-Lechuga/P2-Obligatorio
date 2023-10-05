@@ -36,7 +36,6 @@ namespace Dominio.Entidades
         public EstadoSolicitud Estado
         {
             get { return _estado;}
-            set { _estado = value; }
         }
 
         public DateTime FechaSolicitud
@@ -79,6 +78,10 @@ namespace Dominio.Entidades
             //NEXT: Segunda entrega
         }
 
+        public void CambiarEstado(EstadoSolicitud estadoAceptado)
+        {
+            _estado = estadoAceptado;
+        }
         #endregion
 
         #region Metodos sobreescritos
@@ -88,6 +91,7 @@ namespace Dominio.Entidades
             return $"El miembro {_solicitante.Nombre} realizo una solicitud al miembro {_solicitado.Nombre}.\n" +
                 $"El dia {_fechaSolicitud.Date} y esta en estado {_estado}.";
         }
+
 
         #endregion
     }

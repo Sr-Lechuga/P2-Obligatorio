@@ -30,7 +30,6 @@ namespace Dominio.Entidades
         public Miembro Autor
         {
             get { return _autor; }
-            set { _autor = value; }
         }
 
         public DateTime Fecha
@@ -41,13 +40,11 @@ namespace Dominio.Entidades
         public string Contenido
         {
             get { return _contenido; }
-            set { _contenido = value; }
         }
 
         public List<Reaccion> Reacciones
         {
             get { return _reacciones; }
-            set { _reacciones = value;}
         }
 
         #endregion
@@ -97,7 +94,7 @@ namespace Dominio.Entidades
                 throw new Exception("El contenido no puede ser vacio");
         }
 
-        public void AgregarReaccion (Miembro miembro, bool like)
+        public void AgregarOModificarReaccion (Miembro miembro, bool like)
         {
             Reaccion reaccion = new Reaccion(miembro, like);
 

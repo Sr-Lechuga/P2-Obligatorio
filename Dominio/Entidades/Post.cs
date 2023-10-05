@@ -15,12 +15,10 @@
         public string Image
         {
             get { return _imagen; }
-            set { _imagen = value; }
         }
         public bool Privado
         {
             get { return _privado; }
-            set { _privado = value; }
         }
         public List<Comentario> Comentarios
         {

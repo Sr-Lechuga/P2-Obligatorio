@@ -17,7 +17,6 @@ namespace Dominio.Entidades
         {
             get { return _like; }
             //Debe ser posible cambiar la opinion acerca de una publicacion
-            set { _like = value; }
         }
 
         public Miembro Miembro
