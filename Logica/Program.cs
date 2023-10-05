@@ -3,6 +3,7 @@ using Dominio.Entidades;
 using Dominio.ExcepcionesPersonalizadas;
 using System.Data;
 using System.Globalization;
+using System.Text;
 
 namespace Vista
 {
@@ -10,6 +11,9 @@ namespace Vista
     {
         static void Main(string[] args)
         {
+            //Comentarios con emojis
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+
             //Definimos la cultura como la de uruguay para no tener problemas con la fecha
             CultureInfo culturaUruaguaya = new CultureInfo("es-UY");
             CultureInfo.DefaultThreadCurrentCulture = culturaUruaguaya;
@@ -45,16 +49,10 @@ namespace Vista
                         return;
                     }
 
-                    if (!exito)
-                    {
-                        break;
-                    }
-                    else
-                    {
+                    if (exito)
                         Enrutamiento(opcion);
-                        break;
-                    }
 
+                    break;
                 }
 
             }
@@ -62,7 +60,7 @@ namespace Vista
         }
 
         /// <summary>
-        /// Dado un array de opciones, muestra en consola todas las opciones disponibles en formato 'posicion.descripcion'
+        /// Dada una lista de opciones, muestra en consola todas las opciones disponibles en formato 'posicion) descripcion'
         /// <para><i><b>Nota:</b> el menu de opciones dibujado contiene un salto de pagina al comienzo y otro al final.</i></para>
         /// </summary>
         /// <param name="opciones">Contiene la descripcion de todas las opciones disponibles para el menu</param>
@@ -133,6 +131,7 @@ namespace Vista
             {
                 sistema.AltaMiembro(nuevoMiembro);
                 Console.Write("\n¡Miembro agregado al sistema con éxito!");
+                Console.ReadKey();
             }
             catch (Exception ex)
             {

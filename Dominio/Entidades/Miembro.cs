@@ -78,7 +78,7 @@ namespace Dominio.Entidades
         /// <exception cref="Exception"></exception>
         private void ValidarFechaNacimiento()
         {
-            if (_fechaNacimiento > DateTime.Today)
+            if (DateTime.Today < _fechaNacimiento )
                 throw new Exception("La fecha de nacimiento debe ser menor a la fecha actual");
         }
 
@@ -102,7 +102,7 @@ namespace Dominio.Entidades
         /// <exception cref="NameFormatException"></exception> 
         private void ValidarApellido()
         {
-            if (string.IsNullOrEmpty(_nombre))
+            if (string.IsNullOrEmpty(_apellido))
                 throw new NameFormatException("El apellido ingresado es vacio. Intenelo con uno nuevo nuevo");
         }
 
