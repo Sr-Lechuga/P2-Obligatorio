@@ -3,8 +3,6 @@
     [Serializable]
     public class NameFormatException : Exception
     {
-        public NameFormatException() { }
-
-        public NameFormatException(string formatErrorDescription) : base(formatErrorDescription) { }
+        public NameFormatException(string mensaje = "El formato del nombre/apellido no es correcto") : base(mensaje) { }
     }
 }

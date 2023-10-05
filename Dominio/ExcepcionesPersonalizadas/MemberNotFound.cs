@@ -3,13 +3,13 @@
 namespace Dominio.ExcepcionesPersonalizadas
 {
     [Serializable]
-    internal class MemberNotFound : Exception
+    public class MemberNotFound : Exception
     {
-        public Miembro Miembro { get; }
+        public Miembro? Miembro { get; }
 
-        public MemberNotFound(string mensaje) { }
+        public MemberNotFound(string mensaje = "No se encontro el miembro en el sistema") : base(mensaje) { }
 
-        public MemberNotFound(string mensaje, Miembro miembro) 
+        public MemberNotFound(Miembro miembro, string mensaje = "No se encontro el miembro en el sistema") : base(mensaje)
         {
             Miembro = miembro;
         }
