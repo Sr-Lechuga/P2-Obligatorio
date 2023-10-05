@@ -11,6 +11,7 @@ namespace Dominio.ExcepcionesPersonalizadas
 
         public MemberNotFound(Miembro miembro, string mensaje = "No se encontro el miembro en el sistema") : base(mensaje)
         {
+            Mensaje = mensaje;
             Miembro = miembro;
         }
     }
