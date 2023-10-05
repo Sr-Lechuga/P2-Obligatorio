@@ -72,7 +72,6 @@
         /// <returns>Lista de <c>Comentario</c></returns>
         public List<Comentario> DevolverListaComentarios()
         {
-            //TODO: Devulver una lista copia de lso comentarios
             return _comentarios;
         }
 
@@ -94,5 +93,10 @@
             return -1 * this.Titulo.CompareTo(other.Titulo);
         }
         #endregion
+
+        public override string ToString()
+        {
+            return $"Fecha:{_fecha}\nTitulo: {_titulo}\nContenido: {_contenido}";
+        }
     }
 }

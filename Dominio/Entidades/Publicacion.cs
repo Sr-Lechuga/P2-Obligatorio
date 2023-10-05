@@ -6,7 +6,7 @@ namespace Dominio.Entidades
     {
         #region Atributos
 
-        private static int s_ultId;
+        private static int s_ultId = 1;
         protected int _id;
         protected string _titulo;
         protected string _contenido;

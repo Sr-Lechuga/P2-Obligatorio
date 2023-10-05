@@ -16,5 +16,10 @@
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return $"Fecha:{_fecha}\nContenido: {_contenido}";
+        }
     }
 }

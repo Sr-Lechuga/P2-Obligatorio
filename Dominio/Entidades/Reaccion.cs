@@ -54,7 +54,6 @@ namespace Dominio.Entidades
         /// <param name="nuevaReaccion">Nueva reacciono de un <c>Miembro</c> a una <c>Publicacion</c>.</param>
         public void ModificarReaccion(bool nuevaReaccion)
         {
-            //NEXT: Segunda entrega (extra)
             _like = nuevaReaccion;
         }
         #endregion

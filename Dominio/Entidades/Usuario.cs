@@ -64,26 +64,8 @@ namespace Dominio.Entidades
 
         private void ValidarContrasenia(string contrasenia)
         {
-            //Regex MayusculaRgx = new(@"[A-Z]{1}", RegexOptions.Compiled);
-            //Regex numeroRgx = new(@"[0-9]{1}", RegexOptions.Compiled);
-            //Regex simboloRgx = new(@"[\W]{1}", RegexOptions.Compiled);
-
-            //Retrieves a collection of matches with upper case letters
-            //MatchCollection match = MayusculaRgx.Matches(_contrasenia);
-            //if (match.Count < 1)
-            //    throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
-
-            //match = numeroRgx.Matches(_contrasenia);
-            //if (match.Count < 1)
-            //    throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
-
-            //match = simboloRgx.Matches(_contrasenia);
-            //if (match.Count < 1)
-            //    throw new Exception("La contrasenia ingresada debe tener al menos 1 mayuscula, 1 numero y 1 simbolo");
-
             if (contrasenia.Length < 8) /*Charla con profe 04/10*/
                 throw new Exception("La constrasenia debe contener al menos 8 caracteres");
-
         }
         #endregion
 
