@@ -13,8 +13,7 @@ namespace Dominio
         //Constructor
         private SocialNetwork()
         {
-            _administradores = new List<Administrador>();
-            _miembros = new List<Miembro>();
+            _usuarios = new List<Usuario>();
             _relaciones = new List<Solicitud>();
             _posteos = new List<Post>();
 
@@ -37,8 +36,7 @@ namespace Dominio
 
         #region Atributos
 
-        private List<Administrador> _administradores;
-        private List<Miembro> _miembros;
+        private List<Usuario> _usuarios;
         private List<Solicitud> _relaciones;
         private List<Post> _posteos;
         private Usuario? _usuarioDeSesion;
@@ -46,8 +44,7 @@ namespace Dominio
 
         #region Propiedades
         //Todas las listas son recupeerables, pero no pse pueden modificar fuera de la clase sistema
-        public List<Administrador> Administradores { get { return _administradores; } }
-        public List<Miembro> Miembros { get { return _miembros; } }
+        public List<Usuario> Usuarios { get { return _usuarios; } }
         public List<Solicitud> Solicitudes { get { return _relaciones; } }
         public List<Post> Posteos { get { return _posteos; } }
 
@@ -186,12 +183,14 @@ namespace Dominio
         private void PrecargarSolicitudes()
         {
             Random random = new Random();
-            for (int i = 0; i < _miembros.Count; i++)
+            List<Miembro> miembrosRegistrados =  DevolverMiembrosRegistrados();
+
+            for (int i = 0; i < miembrosRegistrados.Count; i++)
             {
-                Miembro miembroSolicitante = _miembros[i];
-                for (int j = 0; j < _miembros.Count; j++)
+                Miembro miembroSolicitante = miembrosRegistrados[i];
+                for (int j = 0; j < miembrosRegistrados.Count; j++)
                 {
-                    Miembro miembroSolicitado = _miembros[j];
+                    Miembro miembroSolicitado = miembrosRegistrados[j];
                     if (!miembroSolicitante.Equals(miembroSolicitado))
                     {
                         if (i == 0 || i == 1)
@@ -216,6 +215,33 @@ namespace Dominio
         #endregion
 
         #region Metodos
+        public List<Miembro> DevolverMiembrosRegistrados()
+        {
+            List<Miembro> miembrosRegistrados = new List<Miembro> ();
+            
+            foreach(Usuario usuario in _usuarios)
+            {
+                if (usuario is Miembro) {
+                    miembrosRegistrados.Add((Miembro) usuario);
+                }
+            }
+            return miembrosRegistrados;
+        }
+
+        public List<Administrador> DevolverAdministradoresDelSistema()
+        {
+            List<Administrador> administradoresSistema = new List<Administrador>();
+
+            foreach (Usuario usuario in _usuarios)
+            {
+                if (usuario is Administrador)
+                {
+                    administradoresSistema.Add((Administrador) usuario);
+                }
+            }
+            return administradoresSistema;
+        }
+
         /// <summary>
         /// Da de alta a un <c>Miembro</c> en el sistema
         /// <para><b>Expeciones</b></para>
@@ -227,10 +253,10 @@ namespace Dominio
         {
             miembro.Validar();
 
-            if (_miembros.Contains(miembro))
+            if (_usuarios.Contains(miembro))
                 throw new DuplicateUserInSystem($"El miembro {miembro.Email} ya esta registrado en el sistema");
 
-            _miembros.Add(miembro);
+            _usuarios.Add(miembro);
         }
 
         /// <summary>
@@ -244,10 +270,10 @@ namespace Dominio
         {
             administrador.Validar();
 
-            if (_administradores.Contains(administrador))
+            if (_usuarios.Contains(administrador))
                 throw new DuplicateUserInSystem($"El administrador {administrador.Email} ya esta registrado en el sistema");
 
-            _administradores.Add(administrador);
+            _usuarios.Add(administrador);
         }
 
         /// <summary>
@@ -347,8 +373,9 @@ namespace Dominio
         {
             int maxPublicaciones = 0;
             List<Miembro> miembosConMasPublicaciones = new List<Miembro>();
+            List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
 
-            foreach (Miembro miembro in _miembros)
+            foreach (Miembro miembro in miembrosRegistrados)
             {
                 List<Publicacion> publicacionesMiembro = DevolverListaPublicacionesDelMiembro(miembro.Email);
                 if (publicacionesMiembro.Count > maxPublicaciones)
@@ -383,10 +410,12 @@ namespace Dominio
 
         int i = 0;
         Miembro? miembro = null;
-        while (miembro == null && i < _miembros.Count)
+        List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
+
+        while (miembro == null && i < miembrosRegistrados.Count)
         {
-            if (_miembros[i].Email == email)
-                miembro = _miembros[i];
+            if (miembrosRegistrados[i].Email == email)
+                miembro = miembrosRegistrados[i];
             i++;
         }
 
@@ -405,9 +434,11 @@ namespace Dominio
     private Miembro SeleccionarMiembroAleatorio()
     {
         Random indiceRandom = new Random();
-        int indiceMiembroAleatorio = indiceRandom.Next(_miembros.Count);
+        List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
 
-        return _miembros[indiceMiembroAleatorio];
+        int indiceMiembroAleatorio = indiceRandom.Next(miembrosRegistrados.Count);
+
+        return miembrosRegistrados[indiceMiembroAleatorio];
     }
 
     /// <summary>
