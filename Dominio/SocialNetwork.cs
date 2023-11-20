@@ -215,6 +215,23 @@ namespace Dominio
         #endregion
 
         #region Metodos
+        public Usuario AutenticarUsuario(string email, string contrasenia)
+        {
+            Usuario? usuarioBuscado = null;
+            int i = 0;
+            while (usuarioBuscado == null && i < _usuarios.Count)
+            {
+                if (_usuarios[i].Email == email)
+                    usuarioBuscado = _usuarios[i];
+                i++;
+            }
+
+            if (usuarioBuscado == null || usuarioBuscado.Contrasenia != contrasenia)
+                throw new Exception("Usuario o contraseña incorrectas");
+
+            return usuarioBuscado;
+        }
+
         public List<Miembro> DevolverMiembrosRegistrados()
         {
             List<Miembro> miembrosRegistrados = new List<Miembro> ();
