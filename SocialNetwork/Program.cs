@@ -9,6 +9,17 @@ namespace SocialNetwork
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            //Sesion
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                //15 minutos por sesion
+                options.IdleTimeout = TimeSpan.FromSeconds(900);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -25,6 +36,8 @@ namespace SocialNetwork
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
