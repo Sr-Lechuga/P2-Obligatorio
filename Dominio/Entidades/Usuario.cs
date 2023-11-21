@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Dominio.Entidades
 {
-    public class Usuario : IValidable
+    public abstract class Usuario : IValidable
     {
         #region Atributos
         private string _email;
@@ -67,6 +67,8 @@ namespace Dominio.Entidades
             if (contrasenia.Length < 8) /*Charla con profe 04/10*/
                 throw new Exception("La constrasenia debe contener al menos 8 caracteres");
         }
+
+        public abstract string Rol();
         #endregion
 
         #region Overrided Methods

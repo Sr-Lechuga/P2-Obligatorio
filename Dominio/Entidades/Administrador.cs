@@ -37,5 +37,12 @@
         }
 
         #endregion
+
+        #region Overrided Methods
+        public override string Rol()
+        {
+            return "administrador";
+        }
+        #endregion
     }
 }

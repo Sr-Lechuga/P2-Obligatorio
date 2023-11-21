@@ -26,14 +26,19 @@ namespace SocialNetwork.Controllers
             try
             {
                 Usuario logueado = _sistema.AutenticarUsuario(email, contrasenia);
-
                 HttpContext.Session.SetString("emailUsuario", logueado.Email);
+
                 if (logueado is Miembro) { 
-                    Miembro miembroLogueado = (Miembro)logueado;
-                    HttpContext.Session.SetString("nombreUsuario", miembroLogueado.Nombre);
+                    Miembro usuarioLogueado = (Miembro)logueado;
+                    HttpContext.Session.SetString("nombreUsuario", usuarioLogueado.Nombre);
+                    HttpContext.Session.SetString("rol", usuarioLogueado.Rol());
                 }
                 else
+                {
+                    Administrador usuarioLogueado = (Administrador) logueado;
                     HttpContext.Session.SetString("nombreUsuario", "Admin");
+                    HttpContext.Session.SetString("rol", usuarioLogueado.Rol());
+                }
 
                 return RedirectToAction("Index");
 
@@ -43,6 +48,12 @@ namespace SocialNetwork.Controllers
                 ViewBag.MensajeError = ex.Message;
                 return View();
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("/");
         }
     }
 }

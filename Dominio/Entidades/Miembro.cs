@@ -139,6 +139,11 @@ namespace Dominio.Entidades
             return other is Miembro otroMiembro && this.Email == otroMiembro.Email;
         }
 
+        public override string Rol()
+        {
+            return "miembro";
+        }
+
 
         #endregion
     }
