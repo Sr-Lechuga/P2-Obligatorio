@@ -215,6 +215,14 @@ namespace Dominio
         #endregion
 
         #region Metodos
+        /// <summary>
+        /// Se fija si el usuario Administrador o Miembro esta registrado en el sistema. Asi como si la contraseña coincide con la guardada
+        /// <para>Expecion - En caso que el usurio no este registrado o no coincida la contraseña</para>
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="contrasenia"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public Usuario AutenticarUsuario(string email, string contrasenia)
         {
             Usuario? usuarioBuscado = null;
