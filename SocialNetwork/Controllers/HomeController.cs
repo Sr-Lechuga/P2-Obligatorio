@@ -15,13 +15,13 @@ namespace SocialNetwork.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Ingresar()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string email, string contrasenia)
+        public IActionResult Ingresar(string email, string contrasenia)
         {
             try
             {

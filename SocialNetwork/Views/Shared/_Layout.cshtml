@@ -26,20 +26,21 @@
                     {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Index">Posts</a>
-                                @* Buscar Publicacion *@
-                                @* Ver post *@
-                                @* Comentar post *@
-                                @* Reaccionar Post *@
+                                <a class="nav-link text-dark" href="/Posts/Wonderland">Posts</a>
+                                @* Ver post -> /Posts/Wonderland *@
+                                @* Buscar Publicacion -> /Posts/Buscar *@
+                                @* Comentar post -> /Posts/Wonderland *@
+                                @* Reaccionar Post -> /Posts/Wonderland *@
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Index">Amigos</a>
-                                @* Ver solicitudes pendietes *@
-                                @* Ver amigos *@
-                                @* Enviar solicitud *@
+                                <a class="nav-link text-dark" href="/Amigos">Amigos</a>
+                                @* Ver solicitudes pendietes -> Amigos/Index  *@
+                                @* Ver amigos -> Amigos/Index -> Amigos/Lista  *@
+                                @* Enviar solicitud -> Amigos/Index -> Amigos/Buscar *@
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Index">Publicar</a>
+                                <a class="nav-link text-dark" href="/Publicar">Publicar</a>
+                                @* Hacer Post *@
                             </li>
                         </ul>
                     }
@@ -47,13 +48,13 @@
                     {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Index">Listar Miembros</a>
+                                <a class="nav-link text-dark" href="/Consola/Lista_Miembros">Listar Miembros</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Index">Bloquear Miembros</a>
+                                <a class="nav-link text-dark" href="/Consola/Bloquear_Miembros">Bloquear Miembros</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Index">Banear Post</a>
+                                <a class="nav-link text-dark" href="/Consola/Bloquear_Post">Banear Post</a>
                             </li>
                         </ul>
                     }
@@ -66,7 +67,7 @@
                         @if(nombreUsuario == null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Home/Login">Ingresar</a>
+                                <a class="nav-link text-dark" href="/Home/Ingresar">Ingresar</a>
                             </li>
                         }
                         else

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<h1>Login</h1>
+
+<form method="post">
+    <input type="text" name="email" placeholder="Ingrese su email" />
+    <input type="password" name="contrasenia" placeholder="Ingrese su contraseña" />
+    <input type="submit" value="Login" />
+</form>
+
+<h1>Registrarse</h1>
+
+<form method="post">
+    <input type="text" name="email" placeholder="Ingrese su email" />
+    <input type="text" name="nombre" placeholder="Ingrese su nombre" />
+    <input type="password" name="contrasenia" placeholder="Ingrese su contraseña" />
+    <input type="password" name="contrasenia" placeholder="Repita su contraseña" />
+    <input type="submit" value="Registro" />
+</form>
+
+<p class="alert-danger">@ViewBag.MensajeError</p>
