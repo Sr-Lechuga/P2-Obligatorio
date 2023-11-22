@@ -1,3 +1,29 @@
+:root {
+    /* **************** Colors ******************* */
+    --start-color: #FFED46;
+    --middle-color: #ffa646;
+    --end-color: #FF7EC7;
+    --start-color-dark: #000000;
+    --middle-color-dark: #6c4419;
+    --end-color-dark: #57203f;
+    --body-color: linear-gradient(220.55deg, var(--start-color) 0%, var(--end-color) 100%);
+    --body-color-black: linear-gradient(130.55deg, var(--start-color-dark) 0%, var(--end-color-dark) 100%);
+    --black-transparent: rgba(113, 74, 32, 0.4);
+    --title-color: #FFF;
+    --text-color: #F3F3F3;
+    /* **************** Transitions ******************* */
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+    --tran-09: all 0.9s ease;
+    /* *************** Shadows ********************** */
+    --shadow-color: 0deg 0% 0%;
+    --shadow-elevation-low: -0.9px 1px 1.7px hsl(var(--shadow-color) / 0.09), -3.6px 3.7px 6.5px -1.6px hsl(var(--shadow-color) / 0.14);
+    --shadow-elevation-medium: -0.9px 1px 1.7px hsl(var(--shadow-color) / 0.08), -5.3px 5.4px 9.5px -0.8px hsl(var(--shadow-color) / 0.12), -18px 18.4px 32.4px -1.6px hsl(var(--shadow-color) / 0.15);
+    --shadow-elevation-high: -0.9px 1px 1.7px hsl(var(--shadow-color) / 0.09), -10.4px 10.7px 18.8px -0.4px hsl(var(--shadow-color) / 0.12), -22.5px 23px 40.5px -0.8px hsl(var(--shadow-color) / 0.14), -45.2px 46.1px 81.3px -1.2px hsl(var(--shadow-color) / 0.16), -86.4px 88.3px 155.7px -1.6px hsl(var(--shadow-color) / 0.18);
+}
+
 html {
   font-size: 14px;
 }
@@ -27,4 +53,6 @@ body {
     padding: 30px;
     margin: 20px;
     border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: var(--shadow-elevation-high);
 }
