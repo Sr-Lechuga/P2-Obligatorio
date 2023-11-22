@@ -51,7 +51,7 @@ namespace SocialNetwork.Controllers
         /// </summary>
         /// <param name="emailUsuario"></param>
         /// <returns></returns>
-        public IActionResult MostrarPostAmigo(string emailUsuario)
+        public IActionResult MostrarPostAmigo(string emailUsuario) //Cambie el nombre del action de Buscar a MostrarPostAmigo para poder generar la nueva vista (nunca me salio)
         {
             List<Post> listaPost = new List<Post>();
 
@@ -69,7 +69,9 @@ namespace SocialNetwork.Controllers
 
             }
 
-            return View("Wonderland", listaPost);
+            return View("MostrarPostAmigo", listaPost); // cambie la vista de Wonderland a MostrarPostAmigo
+
+
         }
 
     }
