@@ -20,3 +20,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.post-containder {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border: 1px solid black;
+}

@@ -1,0 +1,21 @@
+﻿@using Dominio.Entidades
+@{
+    ViewBag.Title = "Wonderland";
+}
+
+
+@foreach (Post post in ViewBag.Posts)
+{
+    <p>@post.Contenido</p>
+}
+
+<div>
+    <h2>Juan Perez</h2>
+    <div class="post-container" >
+        <span class="border"></span>
+        <span class="border">Comentarios</span>
+        <label id=>Realizar un comentario</label>
+        <input type="text" id="realizar_comentario" placeholder="realizar_comentario"/>
+        <input type="button" id="btn_comentario" value="Enviar Comentario" />
+    </div>
+</div>
