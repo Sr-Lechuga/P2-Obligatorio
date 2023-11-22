@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Dominio.Entidades;
 
 namespace SocialNetwork.Controllers
 {
@@ -8,8 +9,9 @@ namespace SocialNetwork.Controllers
 
         public IActionResult Wonderland()
         {
-            ViewBag.Posts = _sistema.Posteos;
-            return View();
+            List<Post> posteos = _sistema.Posteos;
+            //TODO: Que pasa si los posteos son nulos?
+            return View(posteos);
         }
 
         public IActionResult Buscar()
