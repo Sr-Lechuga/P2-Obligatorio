@@ -40,10 +40,11 @@
                     </div>
                 </div>
             }
-            <form method="post" class="make-a-comment">
+            <form method="post" class="make-a-comment" action="/Post/AgregarComentario">
+                <input type="hidden" name="id_post" value="@post.Id"/>
                 <label>Realizar un comentario</label>
-                <textarea name="comentario" placeholder="Ingrese su comentario"></textarea>
-                <input type="submit" id="btn_comentario" value="Enviar Comentario" />
+                <textarea name="contenidoComentario" placeholder="Ingrese su comentario"></textarea>
+                <input type="submit" value="Enviar Comentario" />
             </form>
         </div>
     </div>
