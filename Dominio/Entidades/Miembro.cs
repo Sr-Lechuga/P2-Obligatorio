@@ -125,7 +125,7 @@ namespace Dominio.Entidades
 
         public override string ToString()
         {
-            return $"Es el miembro: {Nombre},{Apellido}.";
+            return $"{Nombre} {Apellido}";
         }
 
         /// <summary>
