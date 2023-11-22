@@ -51,7 +51,7 @@ namespace SocialNetwork.Controllers
         /// </summary>
         /// <param name="emailUsuario"></param>
         /// <returns></returns>
-        public IActionResult BuscarPostAmigo(string emailUsuario)
+        public IActionResult MostrarPostAmigo(string emailUsuario)
         {
             List<Post> listaPost = new List<Post>();
 
