@@ -10,7 +10,7 @@ namespace SocialNetwork.Controllers
 
         public IActionResult Wonderland()
         {
-            List<Post> posteos = _sistema.Posteos;
+            List<Post> posteos = _sistema.DevolverWonderland(HttpContext.Session.GetString("emailUsuario"));
 
             if (posteos.Count == 0)
                 ViewBag.MensajeError = "No hay publicaciones para mostrar";

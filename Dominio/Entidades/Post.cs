@@ -21,6 +21,7 @@ namespace Dominio.Entidades
         public bool Privado
         {
             get { return _privado; }
+            set { _privado = value; }
         }
         public List<Comentario> Comentarios
         {

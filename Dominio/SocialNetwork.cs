@@ -147,10 +147,11 @@ namespace Dominio
                 Post unPost = new Post(titulosPost[iPost], contenidosPost[iPost], posteadorAleatorio, $"c:/img/{imagenes[iPost]}.png", false);
                 unPost.Validar();
 
-                // Agrega reaccion a 2 Post
+                // Agrega reaccion a 2 Post y volverlos privados
 
                 if (iPost == 0 || iPost == 1)
                 {
+                    unPost.Privado = true;
                     reaccionadorAleatorio = SeleccionarMiembroAleatorio();
                     Reaccion reaccion = new Reaccion(reaccionadorAleatorio, true);
                     unPost.Reacciones.Add(reaccion);
@@ -192,7 +193,13 @@ namespace Dominio
                     Miembro miembroSolicitado = miembrosRegistrados[j];
                     if (!miembroSolicitante.Equals(miembroSolicitado))
                     {
-                        if (i == 0 || i == 1)
+                        if(i == 0)
+                        {
+                            Solicitud unaSolicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
+                            unaSolicitud.CambiarEstado(EstadoSolicitud.RECHAZADA);
+                            _relaciones.Add(unaSolicitud);
+                        }
+                        else if (i == 1)
                         {
                             Solicitud unaSolicitud = new Solicitud(miembroSolicitante, miembroSolicitado);
                             EstadoSolicitud estadoAceptado = EstadoSolicitud.ACEPTADA;
@@ -588,9 +595,32 @@ namespace Dominio
             return amigos; 
         }
 
-        public bool EsAmigo(string emailMiembro, string emailAmigo)
+        public bool EsAmigo(string? emailMiembro, string? emailAmigo)
         {
             return BuscarAmigos(BuscarMiembro(emailMiembro)).Contains(BuscarMiembro(emailAmigo));
+        }
+
+        public List<Post> DevolverWonderland (string? emailMiembro)
+        {
+            List<Post> wonderland = new List<Post>();
+            
+            List<Post> misPost = new List<Post>();
+            List<Publicacion> misPublicaciones = DevolverListaPublicacionesDelMiembro(emailMiembro);
+            foreach (Publicacion miPublicacion in misPublicaciones)
+            {
+                if (miPublicacion is Post)
+                    misPost.Add((Post)miPublicacion);
+            }
+
+            foreach (Post unPost in _posteos)
+            {
+                if (!unPost.Privado || misPost.Contains(unPost) || EsAmigo(emailMiembro, unPost.Autor.Email))
+                {
+                    wonderland.Add(unPost);
+                }
+            }
+
+            return wonderland;
         }
         #endregion
 
