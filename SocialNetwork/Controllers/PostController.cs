@@ -85,7 +85,7 @@ namespace SocialNetwork.Controllers
                 string titulo = $"Comentario de " + nombreUsuarioLogueado;
                 
                 Post postComentado = _sistema.BuscarPost(id_post);
-                if (postComentado != null && contenidoComentario)
+                if (postComentado != null && contenidoComentario != null)
                 {
                     Comentario nuevoComentario = new Comentario(titulo, contenidoComentario, miembroLogueado);
                     postComentado.AgregarComentario(nuevoComentario);
@@ -97,5 +97,29 @@ namespace SocialNetwork.Controllers
 
         }
 
+        public IActionResult BuscarDesdeTexto (string texto, int aceptacion)
+        {
+            List<Publicacion> publicacionesContienenTexto = new List<Publicacion>();
+            foreach(Post post in _sistema.Posteos)
+            {
+                if(post.Contenido.Contains(texto) && post.ValorDeAceptacion() > aceptacion) // Crear el metodo valor de aceptacion las pautas se encuentran en la letra del obligatorio 1
+                {
+                    publicacionesContienenTexto.Add(post);
+                }
+
+                foreach (Comentario comentario in post.DevolverListaComentarios())
+                {
+                    if(comentario.Contenido.Contains(texto) && comentario.ValorAceptacion() > aceptacion) //Crear metodo ValorAceptacion()
+                    {
+                        publicacionesContienenTexto.Add(comentario);
+                    }
+                }
+            }
+            ViewBag.PublicacionesContienenTexto = publicacionesContienenTexto;
+            return View("wonderland", publicacionesContienenTexto);
+
+
+
+        }
     }
 }
