@@ -56,3 +56,18 @@ body {
     border-radius: 20px;
     box-shadow: var(--shadow-elevation-medium);
 }
+.icon-container{
+    display:flex;
+    flex-direction:row;
+    margin: 10px 0;
+}
+.icon {
+    font-size: 38px;
+    margin: 5px;
+    transition: var(--tran-04);
+}
+
+.icon:hover {
+    color: red;
+
+}
