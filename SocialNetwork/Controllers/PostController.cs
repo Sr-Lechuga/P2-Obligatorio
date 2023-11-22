@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dominio.Entidades;
+using Dominio.Enum;
 
 namespace SocialNetwork.Controllers
 {
@@ -11,7 +12,7 @@ namespace SocialNetwork.Controllers
         {
             List<Post> posteos = _sistema.Posteos;
 
-            if(posteos.Count == 0)
+            if (posteos.Count == 0)
                 ViewBag.MensajeError = "No hay publicaciones para mostrar";
 
             return View(posteos);
@@ -23,7 +24,7 @@ namespace SocialNetwork.Controllers
             {
                 Post post = _sistema.BuscarPost(id_post);
                 //Reacciones de comentario
-                if(id_comentario != -1)
+                if (id_comentario != -1)
                 {
                     Comentario comentario = post.BuscarComentario(id_comentario);
                     Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
@@ -36,20 +37,39 @@ namespace SocialNetwork.Controllers
                     post.AgregarOModificarReaccion(miembroLogueado, type == "like" ? true : false);
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 ViewBag.MensajeError = ex.Message;
             }
             List<Post> posteos = _sistema.Posteos;
 
-            return View("Wonderland",posteos);
+            return View("Wonderland", posteos);
         }
 
-        [HttpPost]
-        public IActionResult Buscar()
+        /// <summary>
+        /// Muestra las publicaciones de un usuario si es amigo del miembro logueado
+        /// </summary>
+        /// <param name="emailUsuario"></param>
+        /// <returns></returns>
+        public IActionResult Buscar(string emailUsuario)
         {
+            List<Post> listaPost = new List<Post>();
 
-            return View();
+            Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+            Miembro miembroAmigo = _sistema.BuscarMiembro(emailUsuario);
+
+            if (_sistema.EsAmigo(miembroLogueado.Email, miembroAmigo.Email))
+            {
+                List<Publicacion> listaPublicacionesAmigo = _sistema.DevolverListaPublicacionesDelMiembro(miembroAmigo.Email);
+                foreach (Publicacion publicacion in listaPublicacionesAmigo)
+                {
+                    if (publicacion is Post)
+                        listaPost.Add((Post)publicacion);
+                }
+
+            }
+
+            return View("Wonderland", listaPost);
         }
 
     }

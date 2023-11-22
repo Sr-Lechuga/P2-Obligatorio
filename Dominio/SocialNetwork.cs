@@ -491,7 +491,7 @@ namespace Dominio
             Post postBuscado = null;
             while (postBuscado == null && i < _posteos.Count)
             {
-                if(idPost == _posteos[i].Id)
+                if (idPost == _posteos[i].Id)
                     postBuscado = _posteos[i];
                 i++;
             }
@@ -578,10 +578,20 @@ namespace Dominio
         /// <returns>Lista de <c>Miembros</c></returns>
         public List<Miembro> BuscarAmigos(Miembro miembro)
         {
-            //NEXT: Proxima entrega
-            return null; /*Devuelve lista de miembros*/
+            List<Miembro> amigos = new List<Miembro>();
+
+            foreach (Solicitud solicitud in _relaciones)
+            {
+                if (solicitud.Solicitante == miembro && solicitud.Estado == EstadoSolicitud.ACEPTADA)
+                    amigos.Add(solicitud.Solicitado);
+            }
+            return amigos; 
         }
 
+        public bool EsAmigo(string emailMiembro, string emailAmigo)
+        {
+            return BuscarAmigos(BuscarMiembro(emailMiembro)).Contains(BuscarMiembro(emailAmigo));
+        }
         #endregion
 
         #endregion

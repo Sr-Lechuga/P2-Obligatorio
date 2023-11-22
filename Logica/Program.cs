@@ -245,7 +245,7 @@ namespace Vista
             Console.Write("Fecha fin (DD/MM/AAAA):");
             DateTime fechaFin = ObtenerFechaIngresada("Fecha fin (DD/MM/AAAA):");
 
-            if (fechaFin < fechaComienzo) //TODO chequear si es referencia o valor
+            if (fechaFin < fechaComienzo) 
             {
                 DateTime fechaAux = fechaFin;
                 fechaFin = fechaComienzo;
