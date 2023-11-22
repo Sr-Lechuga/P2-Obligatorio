@@ -51,7 +51,7 @@ namespace SocialNetwork.Controllers
         /// </summary>
         /// <param name="emailUsuario"></param>
         /// <returns></returns>
-        public IActionResult MostrarPostAmigo(string emailUsuario) //Cambie el nombre del action de Buscar a MostrarPostAmigo para poder generar la nueva vista (nunca me salio)
+        public IActionResult Buscar(string emailUsuario) 
         {
             List<Post> listaPost = new List<Post>();
 
@@ -69,7 +69,7 @@ namespace SocialNetwork.Controllers
 
             }
 
-            return View("MostrarPostAmigo", listaPost); // cambie la vista de Wonderland a MostrarPostAmigo
+            return View("Wonderland", listaPost);
 
 
         }
@@ -85,7 +85,7 @@ namespace SocialNetwork.Controllers
                 string titulo = $"Comentario de " + nombreUsuarioLogueado;
                 
                 Post postComentado = _sistema.BuscarPost(id_post);
-                if (postComentado != null && contenidoComentario != null)
+                if (postComentado != null && contenidoComentario)
                 {
                     Comentario nuevoComentario = new Comentario(titulo, contenidoComentario, miembroLogueado);
                     postComentado.AgregarComentario(nuevoComentario);
