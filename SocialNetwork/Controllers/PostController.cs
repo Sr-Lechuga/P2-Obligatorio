@@ -74,5 +74,28 @@ namespace SocialNetwork.Controllers
 
         }
 
+        // Action para poder realizar un comentario.
+        public IActionResult AgregarComentario(int id_post, string contenidoComentario)
+        {
+                List<Post> posteos = _sistema.Posteos;
+           
+                Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+                
+                string nombreUsuarioLogueado = User.Identity.Name;
+                string titulo = $"Comentario de " + nombreUsuarioLogueado;
+                
+                Post postComentado = _sistema.BuscarPost(id_post);
+                if (postComentado != null && contenidoComentario != null)
+                {
+                    Comentario nuevoComentario = new Comentario(titulo, contenidoComentario, miembroLogueado);
+                    postComentado.AgregarComentario(nuevoComentario);
+
+                    return View("wonderland", posteos);
+                }
+            
+            return View("wonderland", posteos);
+
+        }
+
     }
 }
