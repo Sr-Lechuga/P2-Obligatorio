@@ -1,4 +1,6 @@
-﻿namespace Dominio.Entidades
+﻿using System.Transactions;
+
+namespace Dominio.Entidades
 {
     public class Post : Publicacion, IComparable<Post>
     {
@@ -88,15 +90,20 @@
             return comentariosDelMiembro;
         }
 
+        #endregion
+
+        #region Interface Methods
         public int CompareTo(Post? other)
         {
             return -1 * this.Titulo.CompareTo(other.Titulo);
         }
         #endregion
 
+        #region Overrided Methods
         public override string ToString()
         {
             return $"Fecha:{_fecha}\nTitulo: {_titulo}\nContenido: {_contenido}";
         }
+        #endregion
     }
 }

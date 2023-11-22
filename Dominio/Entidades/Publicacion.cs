@@ -135,6 +135,30 @@ namespace Dominio.Entidades
             return reaccion;
         }
 
+        public int CantidadMeGusta()
+        {
+            int cantidadMeGusta = 0;
+
+            foreach (Reaccion reaccion in _reacciones)
+            {
+                if (reaccion.Like)
+                    cantidadMeGusta++;
+            }
+            return cantidadMeGusta;
+        }
+
+        public int CantidadNoMeGusta()
+        {
+            int cantidadNoMeGusta = 0;
+
+            foreach (Reaccion reaccion in _reacciones)
+            {
+                if (!reaccion.Like)
+                    cantidadNoMeGusta++;
+            }
+            return cantidadNoMeGusta;
+        }
+
         #endregion
     }
 }
