@@ -51,8 +51,8 @@ body {
     display: flex;
     flex-direction: column;
     padding: 30px;
-    margin: 20px;
+    margin: 30px;
     border: 1px solid black;
     border-radius: 20px;
-    box-shadow: var(--shadow-elevation-high);
+    box-shadow: var(--shadow-elevation-medium);
 }
