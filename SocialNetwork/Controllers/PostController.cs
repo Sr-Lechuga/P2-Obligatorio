@@ -10,7 +10,10 @@ namespace SocialNetwork.Controllers
         public IActionResult Wonderland()
         {
             List<Post> posteos = _sistema.Posteos;
-            //TODO: Que pasa si los posteos son nulos?
+
+            if(posteos.Count == 0)
+                ViewBag.MensajeError = "No hay publicaciones para mostrar";
+
             return View(posteos);
         }
 
