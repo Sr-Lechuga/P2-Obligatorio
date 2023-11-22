@@ -182,7 +182,7 @@ namespace Dominio
         private void PrecargarSolicitudes()
         {
             Random random = new Random();
-            List<Miembro> miembrosRegistrados =  DevolverMiembrosRegistrados();
+            List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
 
             for (int i = 0; i < miembrosRegistrados.Count; i++)
             {
@@ -241,12 +241,13 @@ namespace Dominio
 
         public List<Miembro> DevolverMiembrosRegistrados()
         {
-            List<Miembro> miembrosRegistrados = new List<Miembro> ();
-            
-            foreach(Usuario usuario in _usuarios)
+            List<Miembro> miembrosRegistrados = new List<Miembro>();
+
+            foreach (Usuario usuario in _usuarios)
             {
-                if (usuario is Miembro) {
-                    miembrosRegistrados.Add((Miembro) usuario);
+                if (usuario is Miembro)
+                {
+                    miembrosRegistrados.Add((Miembro)usuario);
                 }
             }
             return miembrosRegistrados;
@@ -260,7 +261,7 @@ namespace Dominio
             {
                 if (usuario is Administrador)
                 {
-                    administradoresSistema.Add((Administrador) usuario);
+                    administradoresSistema.Add((Administrador)usuario);
                 }
             }
             return administradoresSistema;
@@ -417,149 +418,173 @@ namespace Dominio
             return miembosConMasPublicaciones;
         }
 
-    /// <summary>
-    /// Dado un email, permite buscar un <c>Miembro</c> en el sistema
-    /// <para><b>Excepciones:</b></para>
-    /// <para>Si el email con el que se busca, no esta registrado en el sistema. Devuelve un error de miembro no encontrado <c>MemberNotFound</c></para>
-    /// <para>Si el email con el que se busca, tiene un valor vacio o nulo devuelve una expecion de <c>ArgumentNullException</c></para>
-    /// </summary>
-    /// <param name="email">Email que identifica al usuario inequivocamente en el sistema</param>
-    /// <returns>Devuelve un <c>Miembro</c> del sistema si lo encuentra registrado</returns>
-    /// <exception cref="MemberNotFound"></exception>
-    /// <exception cref="ArgumentNullException"></exception>
-    public Miembro BuscarMiembro(string email)
-    {
-        if (string.IsNullOrWhiteSpace(email))
-            throw new ArgumentNullException("El parametro email no puede estar vacio, es necesario ingresar un mail valido");
-
-        int i = 0;
-        Miembro? miembro = null;
-        List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
-
-        while (miembro == null && i < miembrosRegistrados.Count)
+        /// <summary>
+        /// Dado un email, permite buscar un <c>Miembro</c> en el sistema
+        /// <para><b>Excepciones:</b></para>
+        /// <para>Si el email con el que se busca, no esta registrado en el sistema. Devuelve un error de miembro no encontrado <c>MemberNotFound</c></para>
+        /// <para>Si el email con el que se busca, tiene un valor vacio o nulo devuelve una expecion de <c>ArgumentNullException</c></para>
+        /// </summary>
+        /// <param name="email">Email que identifica al usuario inequivocamente en el sistema</param>
+        /// <returns>Devuelve un <c>Miembro</c> del sistema si lo encuentra registrado</returns>
+        /// <exception cref="MemberNotFound"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        public Miembro BuscarMiembro(string? email)
         {
-            if (miembrosRegistrados[i].Email == email)
-                miembro = miembrosRegistrados[i];
-            i++;
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentNullException("El parametro email no puede estar vacio, es necesario ingresar un mail valido");
+
+            int i = 0;
+            Miembro? miembro = null;
+            List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
+
+            while (miembro == null && i < miembrosRegistrados.Count)
+            {
+                if (miembrosRegistrados[i].Email == email)
+                    miembro = miembrosRegistrados[i];
+                i++;
+            }
+
+            if (miembro == null)
+                throw new MemberNotFound($"El miembro con e-mail {email}, no se encuentra registrado en el sistema.");
+
+            return miembro;
         }
 
-        if (miembro == null)
-            throw new MemberNotFound($"El miembro con e-mail {email}, no se encuentra registrado en el sistema.");
+        #region Auxiliares
 
-        return miembro;
+        /// <summary>
+        /// Devulve un miembro aleatorio de los que estan registrados en el sistema
+        /// </summary>
+        /// <returns cref="Miembro"><c>Miembro</c> aleatorio.</returns>
+        private Miembro SeleccionarMiembroAleatorio()
+        {
+            Random indiceRandom = new Random();
+            List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
+
+            int indiceMiembroAleatorio = indiceRandom.Next(miembrosRegistrados.Count);
+
+            return miembrosRegistrados[indiceMiembroAleatorio];
+        }
+
+        /// <summary>
+        /// Selecciona y devuelve un estado de solicitud aleatorio
+        /// </summary>
+        /// <returns><c>Estado de solicitud</c></returns>
+        private EstadoSolicitud SeleccionarEstadoSolicitudAleatorio()
+        {
+            Random random = new Random();
+            int valorAleatorio = random.Next(1, 4);
+            EstadoSolicitud estadoAleatorio = (EstadoSolicitud)valorAleatorio;
+            return estadoAleatorio;
+        }
+
+        /// <summary>
+        /// Busca a un post en la lista de publicaciones
+        /// <para>Exception - Si el id de post que se busca no esta en el sistema, da error</para>
+        /// </summary>
+        /// <param name="idPost"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public Post BuscarPost(int idPost)
+        {
+            int i = 0;
+            Post postBuscado = null;
+            while (postBuscado == null && i < _posteos.Count)
+            {
+                if(idPost == _posteos[i].Id)
+                    postBuscado = _posteos[i];
+                i++;
+            }
+
+            if (postBuscado == null)
+                throw new Exception("No se encontro el post buscado");
+
+            return postBuscado;
+        }
+        #endregion
+
+        #region ---------- Segunda entrega ----------
+
+        /// <summary>
+        /// Bloquea a un <c>Miembro</c> del sistema
+        /// </summary>
+        public void BloquearMiembro()
+        {
+            //NEXT: Proxima entrega
+        }
+
+        /// <summary>
+        /// Censura un <c>Comentario</c> en el sistema
+        /// </summary>
+        /// <param name="comentario"></param>
+        public void CensurarComentario(Comentario comentario)
+        {
+            //NEXT: Proxima entrega
+        }
+
+        /// <summary>
+        /// Metodo que permite gestionar una solicitud
+        /// </summary>
+        /// <param name="solicitud"> <c>Solicitud</c> que se va a gestionar </param>
+        public void GestionSolicitud(Solicitud solicitud)
+        {
+            //NEXT: Proxima entrega
+        }
+
+        /// <summary>
+        /// Metodo que permite actualizar las <c>Relaciones</c> entre los <c>Miembros</c>
+        /// </summary>
+        /// <param name="email">Email del <c>Miembro</c> a actualizar su lista de amigos</param>
+        public List<Solicitud> ActualizarAmigos(string email)
+        {
+            //NEXT: Proxima entrega
+            return null; /*Devuelve lista miembros (amigos)*/
+        }
+
+        /// <summary>
+        /// Me    todo que muestra los <c>Miembros</c> disponibles para amistad
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> al que se le mostrara la lista de amigos disponibles</param>
+        /// <returns>Lista de <c>Miembros</c></returns>
+        public List<Miembro> MostrarMiembrosDisponiblesParaAmistad()
+        {
+            //NEXT: Proxima entrega
+            return null; /*Devuleve lista de miembros*/
+        }
+
+        /// <summary>
+        /// Metodo que permite enviar una <c>Solicitud</c> de amistad
+        /// </summary>
+        /// <param name="miembro"><c>Miembro</c> al que se le enviara la solicitud</param>
+        public void EnviarSolicitud(Miembro miembro)
+        {
+            //NEXT: Proxima entrega
+        }
+
+        /// <summary>
+        /// Metodo que devuelve una lista con todos los <c>Comentarios</c>
+        /// </summary>
+        /// <returns>Lista de <c>Comentarios</c></returns>
+        public List<Comentario> DevolverListaComentarios()
+        {
+            //NEXT: Proxima entrega
+            return null; /*Dvuelve la lista total de comentarios*/
+        }
+
+        /// <summary>
+        /// Metodo que muestra a los amigos de un <c>Miembro</c>
+        /// </summary>
+        /// <param name="miembro"> <c>Miembro</c> al que se le mostrara la lista de <c>Miembros</c> que son sus amigos</param>
+        /// <returns>Lista de <c>Miembros</c></returns>
+        public List<Miembro> BuscarAmigos(Miembro miembro)
+        {
+            //NEXT: Proxima entrega
+            return null; /*Devuelve lista de miembros*/
+        }
+
+        #endregion
+
+        #endregion
+
     }
-
-    #region Auxiliares
-
-    /// <summary>
-    /// Devulve un miembro aleatorio de los que estan registrados en el sistema
-    /// </summary>
-    /// <returns cref="Miembro"><c>Miembro</c> aleatorio.</returns>
-    private Miembro SeleccionarMiembroAleatorio()
-    {
-        Random indiceRandom = new Random();
-        List<Miembro> miembrosRegistrados = DevolverMiembrosRegistrados();
-
-        int indiceMiembroAleatorio = indiceRandom.Next(miembrosRegistrados.Count);
-
-        return miembrosRegistrados[indiceMiembroAleatorio];
-    }
-
-    /// <summary>
-    /// Selecciona y devuelve un estado de solicitud aleatorio
-    /// </summary>
-    /// <returns><c>Estado de solicitud</c></returns>
-    private EstadoSolicitud SeleccionarEstadoSolicitudAleatorio()
-    {
-        Random random = new Random();
-        int valorAleatorio = random.Next(1, 4);
-        EstadoSolicitud estadoAleatorio = (EstadoSolicitud)valorAleatorio;
-        return estadoAleatorio;
-    }
-    #endregion
-
-    #region ---------- Segunda entrega ----------
-
-    /// <summary>
-    /// Bloquea a un <c>Miembro</c> del sistema
-    /// </summary>
-    public void BloquearMiembro()
-    {
-        //NEXT: Proxima entrega
-    }
-
-    /// <summary>
-    /// Censura un <c>Comentario</c> en el sistema
-    /// </summary>
-    /// <param name="comentario"></param>
-    public void CensurarComentario(Comentario comentario)
-    {
-        //NEXT: Proxima entrega
-    }
-
-    /// <summary>
-    /// Metodo que permite gestionar una solicitud
-    /// </summary>
-    /// <param name="solicitud"> <c>Solicitud</c> que se va a gestionar </param>
-    public void GestionSolicitud(Solicitud solicitud)
-    {
-        //NEXT: Proxima entrega
-    }
-
-    /// <summary>
-    /// Metodo que permite actualizar las <c>Relaciones</c> entre los <c>Miembros</c>
-    /// </summary>
-    /// <param name="email">Email del <c>Miembro</c> a actualizar su lista de amigos</param>
-    public List<Solicitud> ActualizarAmigos(string email)
-    {
-        //NEXT: Proxima entrega
-        return null; /*Devuelve lista miembros (amigos)*/
-    }
-
-    /// <summary>
-    /// Me    todo que muestra los <c>Miembros</c> disponibles para amistad
-    /// </summary>
-    /// <param name="miembro"><c>Miembro</c> al que se le mostrara la lista de amigos disponibles</param>
-    /// <returns>Lista de <c>Miembros</c></returns>
-    public List<Miembro> MostrarMiembrosDisponiblesParaAmistad()
-    {
-        //NEXT: Proxima entrega
-        return null; /*Devuleve lista de miembros*/
-    }
-
-    /// <summary>
-    /// Metodo que permite enviar una <c>Solicitud</c> de amistad
-    /// </summary>
-    /// <param name="miembro"><c>Miembro</c> al que se le enviara la solicitud</param>
-    public void EnviarSolicitud(Miembro miembro)
-    {
-        //NEXT: Proxima entrega
-    }
-
-    /// <summary>
-    /// Metodo que devuelve una lista con todos los <c>Comentarios</c>
-    /// </summary>
-    /// <returns>Lista de <c>Comentarios</c></returns>
-    public List<Comentario> DevolverListaComentarios()
-    {
-        //NEXT: Proxima entrega
-        return null; /*Dvuelve la lista total de comentarios*/
-    }
-
-    /// <summary>
-    /// Metodo que muestra a los amigos de un <c>Miembro</c>
-    /// </summary>
-    /// <param name="miembro"> <c>Miembro</c> al que se le mostrara la lista de <c>Miembros</c> que son sus amigos</param>
-    /// <returns>Lista de <c>Miembros</c></returns>
-    public List<Miembro> BuscarAmigos(Miembro miembro)
-    {
-        //NEXT: Proxima entrega
-        return null; /*Devuelve lista de miembros*/
-    }
-
-    #endregion
-
-    #endregion
-
-}
 }

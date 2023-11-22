@@ -57,17 +57,61 @@ body {
     box-shadow: var(--shadow-elevation-medium);
 }
 .icon-container{
-    display:flex;
-    flex-direction:row;
-    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0 10px 0;
 }
+
+.icon-container a{
+    color: black
+}
+
 .icon {
     font-size: 38px;
     margin: 5px;
     transition: var(--tran-04);
 }
 
-.icon:hover {
-    color: red;
+    .icon.single-comment-icon {
+        font-size: 18px;
+        margin: 5px;
+    }
 
+    .icon.like:hover {
+        color: red;
+    }
+
+    .icon.dislike:hover {
+        color: blue;
+    }
+
+.single-comment-container {
+    padding: 20px 20px 0 20px;
+    margin-bottom: 10px;
+}
+
+.date-data{
+    font-size: 10px;
+    margin: 0;
+}
+
+.author-name{
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.comment-content{
+    margin-left: 15px;
+    margin-bottom: 0;
+}
+
+.make-a-comment {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.make-a-comment textarea{
+    resize: none;
+    height: 120px;
 }

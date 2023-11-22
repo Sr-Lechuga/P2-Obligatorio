@@ -69,7 +69,7 @@ namespace Dominio.Entidades
         }
 
         /// <summary>
-        /// Devuleve una copia de la lista de comentarios del <c>Post</c>
+        /// Devuleve la lista de comentarios del <c>Post</c>
         /// </summary>
         /// <returns>Lista de <c>Comentario</c></returns>
         public List<Comentario> DevolverListaComentarios()
@@ -90,6 +90,22 @@ namespace Dominio.Entidades
             return comentariosDelMiembro;
         }
 
+        public Comentario BuscarComentario(int idComentario)
+        {
+            int i = 0;
+            Comentario comentarioBuscado = null;
+            while (comentarioBuscado == null && i < _comentarios.Count)
+            {
+                if (idComentario == _comentarios[i].Id)
+                    comentarioBuscado = _comentarios[i];
+                i++;
+            }
+
+            if (comentarioBuscado == null)
+                throw new Exception("No se encontro el comentario buscado");
+
+            return comentarioBuscado;
+        }
         #endregion
 
         #region Interface Methods

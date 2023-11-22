@@ -4,35 +4,40 @@
 }
 @model List<Post>;
 
-@if(ViewBag.MensajeError != null)
+@if (ViewBag.MensajeError != null)
 {
     <h2 class="alert-danger text-center">@ViewBag.MensajeError</h2>
 }
 
 @foreach (Post post in Model)
 {
-    
     List<Comentario> comentariosDelPost = post.DevolverListaComentarios();
-    
+
     <div class="post-container">
         <h2>@post.Autor</h2>
         <div>
-            <div class="border">@post.Contenido</div>
+            <div>@post.Contenido</div>
             <div class="icon-container">
-                <div><i class='bx bxs-donate-heart icon'></i></div>
-                <div><i class='bx bxs-upside-down icon'></i></div>
+                <span>@post.CantidadMeGusta()</span><a href="/Post/Reaccionar?id_post=@post.Id&id_comentario=-1&type=like"><i class='bx bxs-donate-heart icon like'></i></a>
+                <span>@post.CantidadNoMeGusta()</span><a href="/Post/Reaccionar?id_post=@post.Id&id_comentario=-1&type=dislike"><i class='bx bxs-upside-down icon dislike'></i></a>
             </div>
-            <div class="border">
-                @foreach(Comentario comentario in comentariosDelPost)
-                {
-                    <p>@comentario.Fecha</p>
-                    <p>@comentario.Autor</p>
-                    <p>@comentario.Contenido</p>
-                }
-            </div>
-            <label id=>Realizar un comentario</label>
-            <input type="text" id="realizar_comentario" placeholder="realizar un comentario" />
-            <input type="button" id="btn_comentario" value="Enviar Comentario" />
+            @foreach (Comentario comentario in comentariosDelPost)
+            {
+                <div class="border rounded single-comment-container">
+                    <p class="date-data">@comentario.Fecha</p>
+                    <p class="author-name">@comentario.Autor</p>
+                    <p class="comment-content">@comentario.Contenido</p>
+                    <div class="icon-container ">
+                        <span>@comentario.CantidadMeGusta()</span><a href="/Post/Reaccionar?id_post=@post.Id&id_comentario=@comentario.Id&type=like"><i class='bx bxs-donate-heart icon single-comment-icon like'></i></a>
+                        <span>@comentario.CantidadNoMeGusta()</span><a href="/Post/Reaccionar?id_post=@post.Id&id_comentario=@comentario.Id&type=dislike"><i class='bx bxs-upside-down icon single-comment-icon dislike'></i></a>
+                    </div>
+                </div>
+            }
+            <form method="post" class="make-a-comment">
+                <label>Realizar un comentario</label>
+                <textarea name="comentario" placeholder="Ingrese su comentario"></textarea>
+                <input type="submit" id="btn_comentario" value="Enviar Comentario" />
+            </form>
         </div>
     </div>
 }
