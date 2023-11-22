@@ -21,9 +21,10 @@ body {
   margin-bottom: 60px;
 }
 
-.post-containder {
+.post-container {
     display: flex;
     flex-direction: column;
     padding: 30px;
+    margin: 20px;
     border: 1px solid black;
 }
