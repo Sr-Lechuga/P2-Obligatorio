@@ -9,13 +9,6 @@
     <h2 class="alert-danger text-center">@ViewBag.MensajeError</h2>
 }
 
-<!-- formulario de búsqueda -->
-<form method="post" action="/Post/MostrarPostAmigo">
-    <label>Buscar Post</label>
-    <input type="text" name="nombrePersona" placeholder="Nombre de un amigo" />
-    <input type="submit" value="Buscar" />
-</form>
-
 @foreach (Post post in Model)
 {
     List<Comentario> comentariosDelPost = post.DevolverListaComentarios();
