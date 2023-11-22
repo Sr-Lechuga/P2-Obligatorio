@@ -2,20 +2,27 @@
 @{
     ViewBag.Title = "Wonderland";
 }
+@model List<Post>;
 
-
-@foreach (Post post in ViewBag.Posts)
+@foreach (Post post in Model)
 {
-    <p>@post.Contenido</p>
-}
-
-<div>
-    <h2>Juan Perez</h2>
-    <div class="post-container" >
-        <span class="border"></span>
-        <span class="border">Comentarios</span>
-        <label id=>Realizar un comentario</label>
-        <input type="text" id="realizar_comentario" placeholder="realizar_comentario"/>
-        <input type="button" id="btn_comentario" value="Enviar Comentario" />
+    
+    List<Comentario> comentariosDelPost = post.DevolverListaComentarios();
+    
+    <div class="post-container">
+        <h2>@post.Autor</h2>
+        <div>
+            <div class="border">@post.Contenido</div>
+            <div class="border">
+                @foreach(Comentario comentario in comentariosDelPost)
+                {
+                    <p>@comentario.Fecha</p>
+                    <p>@comentario.Contenido</p>
+                }
+            </div>
+            <label id=>Realizar un comentario</label>
+            <input type="text" id="realizar_comentario" placeholder="realizar un comentario" />
+            <input type="button" id="btn_comentario" value="Enviar Comentario" />
+        </div>
     </div>
-</div>
+}
