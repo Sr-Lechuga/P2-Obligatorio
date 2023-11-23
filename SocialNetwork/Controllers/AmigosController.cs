@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dominio.Entidades;
+using Dominio.Enum;
 
 namespace SocialNetwork.Controllers
 {
@@ -29,22 +30,28 @@ namespace SocialNetwork.Controllers
 
         public IActionResult Buscar()
         {
-            List<Miembro> listaMiembros = new List<Miembro>();
+            List<Miembro> miembrosDisponibles = new List<Miembro>();
 
             Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
-            List<Miembro> listaAmigos = _sistema.BuscarAmigos(miembroLogueado);
 
-            List<Miembro> miembrosDisponibles = new List<Miembro>();
+            List<Miembro> miembrosRelacionados = new List<Miembro>();
             foreach (Solicitud solicitud in _sistema.Solicitudes)
             {
-                if (solicitud.Solicitante.Equals(miembroLogueado)
-                    && !listaAmigos.Contains(solicitud.Solicitado))
-                {
-
-                }
+                if (solicitud.Solicitante.Equals(miembroLogueado))
+                    miembrosRelacionados.Add(solicitud.Solicitado);
+                else if (solicitud.Solicitado.Equals(miembroLogueado))
+                    miembrosRelacionados.Add(solicitud.Solicitante);
             }
 
-            return View(listaMiembros);
+            List<Miembro> miembrosDelSistema = _sistema.DevolverMiembrosRegistrados();
+            foreach (Miembro miembroSistema in miembrosDelSistema)
+            {
+                if (!miembrosRelacionados.Contains(miembroSistema))
+                    miembrosDisponibles.Add(miembroSistema);
+            }
+
+            return View(miembrosDisponibles);
         }
+
     }
 }
