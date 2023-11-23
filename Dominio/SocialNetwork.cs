@@ -593,8 +593,8 @@ namespace Dominio
                     amigos.Add(solicitud.Solicitado);
                 else if (solicitud.Solicitado == miembro && solicitud.Estado == EstadoSolicitud.ACEPTADA)
                     amigos.Add(solicitud.Solicitante);
-
             }
+
             return amigos; 
         }
 

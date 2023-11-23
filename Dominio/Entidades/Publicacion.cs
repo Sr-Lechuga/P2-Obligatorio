@@ -160,5 +160,11 @@ namespace Dominio.Entidades
         }
 
         #endregion
+
+        #region
+
+        //public int 
+
+        #endregion
     }
 }

@@ -34,6 +34,7 @@ namespace SocialNetwork.Controllers
 
             Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
 
+            // Trae todos los miembros que tengan alguna relacion con el miembro logueado (aceptada,rechazada o pendiente)
             List<Miembro> miembrosRelacionados = new List<Miembro>();
             foreach (Solicitud solicitud in _sistema.Solicitudes)
             {
@@ -43,10 +44,11 @@ namespace SocialNetwork.Controllers
                     miembrosRelacionados.Add(solicitud.Solicitante);
             }
 
+            // Se filtran (quitan) los miembros del sistema, que tengan alguna relacion con el miembro loguado
             List<Miembro> miembrosDelSistema = _sistema.DevolverMiembrosRegistrados();
             foreach (Miembro miembroSistema in miembrosDelSistema)
             {
-                if (!miembrosRelacionados.Contains(miembroSistema))
+                if (!miembrosRelacionados.Contains(miembroSistema) && !miembroSistema.Equals(miembroLogueado))
                     miembrosDisponibles.Add(miembroSistema);
             }
 
@@ -59,6 +61,7 @@ namespace SocialNetwork.Controllers
 
             Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
 
+            //Agrega a la lista de amistades pendientes si el miembro logueado es el solicitante o el solicitado
             foreach (Solicitud solicitud in _sistema.Solicitudes)
             {
                 if ((solicitud.Solicitante.Equals(miembroLogueado) || solicitud.Solicitado.Equals(miembroLogueado)) 
