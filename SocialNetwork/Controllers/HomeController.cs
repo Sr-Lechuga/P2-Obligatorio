@@ -50,24 +50,24 @@ namespace SocialNetwork.Controllers
             }
         }
 
-        [HttpGet] // Este atributo indica que el método responde a solicitudes HTTP GET
-        public IActionResult Registro()
-        {
-            return View();
-        }
 
         [HttpPost]
-        public IActionResult Registro(string email, string nombre, string apellido, string contrasenia, string confirmarContrasenia, DateTime fechaDeNacimiento)
+        public IActionResult Registro(string email, string nombre, string apellido, string contrasenia, string confirmarContrasenia, string fechaDeNacimiento)
         {
             try
             {
-        
+
                 if (contrasenia != confirmarContrasenia)
                 {
                     throw new Exception("Las contraseñas no coinciden.");
                 }
 
-                Miembro nuevoMiembro = new Miembro(email, contrasenia, nombre, apellido, fechaDeNacimiento);
+                int year = int.Parse(fechaDeNacimiento.Substring(0, 4));
+                int month = int.Parse(fechaDeNacimiento.Substring(5, 2));
+                int day = int.Parse(fechaDeNacimiento.Substring(8, 2));
+
+
+                Miembro nuevoMiembro = new Miembro(email, contrasenia, nombre, apellido, new DateTime(year,month,day));
                 _sistema.AltaMiembro(nuevoMiembro);
 
                 
@@ -75,8 +75,8 @@ namespace SocialNetwork.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.MensajeError = ex.Message;
-                return View();
+                TempData["MensajeError"] = ex.Message;
+                return View("Index");
             }
         }
 
