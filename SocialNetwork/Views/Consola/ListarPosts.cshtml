@@ -1,0 +1,31 @@
+﻿@using Dominio.Entidades;
+
+@{
+    ViewBag.Title = "Listado Posteos";
+}
+
+@if (ViewBag.MensajeError != null)
+{
+    <h2 class="alert-danger text-center">@ViewBag.MensajeError</h2>
+}
+@if (TempData["Mensaje"] != null)
+{
+    <h2 class="alert-success text-center">@TempData["Mensaje"]</h2>
+}
+
+@model List<Post>
+@* Lista con todos los posts en el sistema *@
+
+@* //Esto es para probar el back, borrar despues *@
+
+@foreach (Post post in Model)
+{
+    if (post.Censurado)
+    {
+        <p>@post.ToString()</p>
+    }
+    else
+    {
+        <p><a href="/Consola/BanearPost?idPost=@post.Id">@post.ToString()</a></p>
+    }
+}
