@@ -2,7 +2,7 @@
 
 namespace Dominio.Entidades
 {
-    public class Miembro : Usuario, IEquatable<Miembro>
+    public class Miembro : Usuario, IEquatable<Miembro>, IComparable<Miembro>
     {
         #region Atributos
 
@@ -142,6 +142,14 @@ namespace Dominio.Entidades
         public override string Rol()
         {
             return "miembro";
+        }
+
+        public int CompareTo(Miembro? other)
+        {
+            if (this._nombre.CompareTo(other._nombre) == 0)
+                return this._apellido.CompareTo(other._apellido);
+            else
+                return this._nombre.CompareTo(other._nombre);
         }
 
 

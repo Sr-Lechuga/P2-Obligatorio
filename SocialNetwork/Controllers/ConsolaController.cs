@@ -26,8 +26,9 @@ namespace SocialNetwork.Controllers
                 return Redirect("/Home/index");
             }
        
-            //TODO: Ordenar por nombre y apellido ascendentemente
             List<Miembro> miembrosDelSistema = _sistema.DevolverMiembrosRegistrados();
+            miembrosDelSistema.Sort();
+
             return View(miembrosDelSistema);
            }  
 
