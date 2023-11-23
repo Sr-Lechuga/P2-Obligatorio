@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dominio.Entidades;
 using Dominio.Enum;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SocialNetwork.Controllers
 {
@@ -64,13 +65,74 @@ namespace SocialNetwork.Controllers
             //Agrega a la lista de amistades pendientes si el miembro logueado es el solicitado
             foreach (Solicitud solicitud in _sistema.Solicitudes)
             {
-                if (solicitud.Solicitado.Equals(miembroLogueado) 
+                if (solicitud.Solicitado.Equals(miembroLogueado)
                     && solicitud.Estado == EstadoSolicitud.PENDIENTE_APROVACION)
-                    amigosPendientes.Add(solicitud.Solicitado);
+                    amigosPendientes.Add(solicitud.Solicitante);
             }
 
             return View(amigosPendientes);
         }
 
+        public IActionResult AceptarSolicitud(string email)
+        {
+            int i = 0;
+            Solicitud? solicitudParaAceptar = null;
+            try
+            {
+                Miembro miembroLogueuado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+                Miembro miembroSolicitante = _sistema.BuscarMiembro(email);
+
+                while (solicitudParaAceptar == null && i < _sistema.Solicitudes.Count)
+                {
+                    if (_sistema.Solicitudes[i].Solicitado.Equals(miembroLogueuado)
+                        && _sistema.Solicitudes[i].Solicitante.Equals(miembroSolicitante))
+                        solicitudParaAceptar = _sistema.Solicitudes[i];
+                    i++;
+                }
+
+                if (solicitudParaAceptar == null)
+                    throw new Exception("No se encontro la solicitud a aceptar");
+            }
+            catch(Exception ex)
+            {
+                ViewBag.MensajeError = ex.Message;
+                return View("Index");
+            }
+
+            solicitudParaAceptar.CambiarEstado(EstadoSolicitud.ACEPTADA);
+
+            return RedirectToAction("Pendientes");
+        }
+
+        public IActionResult RechazarSolicitud(string email)
+        {
+            int i = 0;
+            Solicitud? solicitudParaAceptar = null;
+            try
+            {
+                Miembro miembroLogueuado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+                Miembro miembroSolicitante = _sistema.BuscarMiembro(email);
+
+                while (solicitudParaAceptar == null && i < _sistema.Solicitudes.Count)
+                {
+                    if (_sistema.Solicitudes[i].Solicitado.Equals(miembroLogueuado)
+                        && _sistema.Solicitudes[i].Solicitante.Equals(miembroSolicitante))
+                        solicitudParaAceptar = _sistema.Solicitudes[i];
+                    i++;
+                }
+
+                if (solicitudParaAceptar == null)
+                    throw new Exception("No se encontro la solicitud a aceptar");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.MensajeError = ex.Message;
+                return View("Index");
+            }
+
+            solicitudParaAceptar.CambiarEstado(EstadoSolicitud.RECHAZADA);
+
+            return RedirectToAction("Pendientes");
+        }
     }
 }
