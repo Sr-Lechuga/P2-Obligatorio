@@ -1,5 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Dominio.Entidades;
+
+@model Publicacion;
+
+<h2>Crear Publicación</h2>
+
+<form method="post" action="/Publicar/Publicar">
+    <label>Título:</label>
+    <input type="text" name="Titulo" required />
+
+    <label>Imagen (URL):</label>
+    <input type="url" name="ImagenUrl" />
+
+    <label>Contenido:</label>
+    <textarea name="Contenido" rows="4" required></textarea>
+
+    <label>Visibilidad:</label>
+    <select name="EsPublico" required>
+        <option value="true">Público</option>
+        <option value="false">Privado</option>
+    </select>
+
+    <input type="submit" value="Publicar" />
+</form>
+
