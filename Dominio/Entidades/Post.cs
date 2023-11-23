@@ -14,6 +14,7 @@ namespace Dominio.Entidades
         #endregion
 
         #region Propiedades
+
         public string Image
         {
             get { return _imagen; }
@@ -27,6 +28,7 @@ namespace Dominio.Entidades
         public List<Comentario> Comentarios
         {
             get { return _comentarios; }
+            set { _comentarios = value; }
         }
         public bool Censurado
         {

@@ -18,12 +18,16 @@ namespace SocialNetwork.Controllers
             Post nuevoPost = new Post(titulo, contenido, autor, imagen, privado == 0 ? false : true);
             try
             {
+                if (autor.Bloqueado)
+                    throw new Exception("El usuario esta baneado. No puede realizar publicaciones");
+
                 _sistema.AgregarPost(nuevoPost);
                 ViewBag.Mensaje = "El post se agrego con exito";
             }
             catch (Exception ex)
             {
-                ViewBag.MensajeError = ex.Message;
+                TempData["MensajeError"] = ex.Message;
+                return Redirect("/Home/Index");
             }
 
             return View("Publicar");

@@ -72,12 +72,17 @@ namespace SocialNetwork.Controllers
         public IActionResult AgregarComentario(int id_post, string contenidoComentario)
         {
                 List<Post> posteos = _sistema.Posteos;
-           
+            try
+            {
                 Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
-                
+
+                if (miembroLogueado.Bloqueado)
+                    throw new Exception("El usuario esta baneado. No puede realizar comentarios");
+
+
                 string nombreUsuarioLogueado = User.Identity.Name;
                 string titulo = $"Comentario de " + nombreUsuarioLogueado;
-                
+
                 Post postComentado = _sistema.BuscarPost(id_post);
                 if (postComentado != null && contenidoComentario != null)
                 {
@@ -86,34 +91,41 @@ namespace SocialNetwork.Controllers
 
                     return View("wonderland", posteos);
                 }
-            
-            return View("wonderland", posteos);
+
+                return View("wonderland", posteos);
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = ex.Message;
+                return Redirect("/Home/Index");
+            }
 
         }
 
         public IActionResult BuscarDesdeTexto (string texto, int aceptacion)
         {
-            List<Publicacion> publicacionesContienenTexto = new List<Publicacion>();
-            foreach(Post post in _sistema.Posteos)
+            List<Post> publicacionesContienenTexto = new List<Post>();
+            List<Post> postDisponibles = _sistema.DevolverWonderland(HttpContext.Session.GetString("emailUsuario"));
+
+            foreach(Post post in postDisponibles)
             {
                 if (post.Contenido.Contains(texto) && post.CalcularValorAceptacion() > aceptacion) 
                 {
                     publicacionesContienenTexto.Add(post);
-                }
+                    List<Comentario> comentariosPost = post.DevolverListaComentarios();
+                    post.Comentarios = new List<Comentario>();
 
-                foreach (Comentario comentario in post.DevolverListaComentarios())
-                {
-                    if (comentario.Contenido.Contains(texto) && comentario.CalcularValorAceptacion() > aceptacion) 
+                    foreach (Comentario comentario in comentariosPost)
                     {
-                        publicacionesContienenTexto.Add(comentario);
+                        if (comentario.Contenido.Contains(texto) && comentario.CalcularValorAceptacion() > aceptacion)
+                        {
+                            post.AgregarComentario(comentario);
+                        }
                     }
                 }
             }
-            ViewBag.PublicacionesContienenTexto = publicacionesContienenTexto;
-            return View("wonderland", publicacionesContienenTexto);
-
-
-
+           
+            return View("Wonderland", publicacionesContienenTexto);
         }
     }
 }

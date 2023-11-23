@@ -77,6 +77,9 @@ namespace Dominio
                 new Miembro("elena.lopez@email.com", "testuser", "Elena", "López", new DateTime(1998, 8, 20))
             };
 
+            //Ana rodriguez esta baneada
+            miembrosPrecargados[4].Bloqueado = true;
+
             foreach (Miembro nuevoMiembro in miembrosPrecargados)
             {
                 AltaMiembro(nuevoMiembro);
@@ -627,9 +630,21 @@ namespace Dominio
 
             foreach (Post unPost in _posteos)
             {
-                if (!unPost.Privado || misPost.Contains(unPost) || EsAmigo(emailMiembro, unPost.Autor.Email))
+                if (!unPost.Censurado &&
+                    (!unPost.Privado || misPost.Contains(unPost) || EsAmigo(emailMiembro, unPost.Autor.Email)))
                 {
-                    wonderland.Add(unPost);
+                    Post postCopia = new Post(unPost.Titulo,unPost.Contenido,unPost.Autor,unPost.Image,unPost.Privado);
+                    wonderland.Add(postCopia);
+                    
+                    foreach(Comentario comentario in unPost.Comentarios)
+                    {
+                        if(DevolverListaPublicacionesDelMiembro(emailMiembro).Contains(comentario)
+                            || EsAmigo(emailMiembro, comentario.Autor.Email))
+                        {
+                            Comentario comentarioCopia = new Comentario(comentario.Titulo, comentario.Contenido, comentario.Autor);
+                            postCopia.AgregarComentario(comentarioCopia);
+                        }
+                    }
                 }
             }
 
