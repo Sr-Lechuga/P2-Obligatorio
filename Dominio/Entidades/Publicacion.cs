@@ -2,7 +2,7 @@
 
 namespace Dominio.Entidades
 {
-    public class Publicacion : IValidable
+    public abstract class Publicacion : IValidable
     {
         #region Atributos
 
@@ -163,7 +163,7 @@ namespace Dominio.Entidades
 
         #region
 
-        //public int 
+        public abstract int CalcularValorAceptacion();
 
         #endregion
     }

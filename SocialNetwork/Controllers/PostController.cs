@@ -45,11 +45,6 @@ namespace SocialNetwork.Controllers
             return View("Wonderland", posteos);
         }
 
-        /// <summary>
-        /// Muestra las publicaciones de un usuario si es amigo del miembro logueado
-        /// </summary>
-        /// <param name="emailUsuario"></param>
-        /// <returns></returns>
         public IActionResult Buscar(string emailUsuario) 
         {
             List<Post> listaPost = new List<Post>();
@@ -101,18 +96,18 @@ namespace SocialNetwork.Controllers
             List<Publicacion> publicacionesContienenTexto = new List<Publicacion>();
             foreach(Post post in _sistema.Posteos)
             {
-                //if(post.Contenido.Contains(texto) && post.ValorDeAceptacion() > aceptacion) // Crear el metodo valor de aceptacion las pautas se encuentran en la letra del obligatorio 1
-                //{
-                //    publicacionesContienenTexto.Add(post);
-                //}
+                if (post.Contenido.Contains(texto) && post.CalcularValorAceptacion() > aceptacion) 
+                {
+                    publicacionesContienenTexto.Add(post);
+                }
 
-                //foreach (Comentario comentario in post.DevolverListaComentarios())
-                //{
-                //    if(comentario.Contenido.Contains(texto) && comentario.ValorAceptacion() > aceptacion) //Crear metodo ValorAceptacion()
-                //    {
-                //        publicacionesContienenTexto.Add(comentario);
-                //    }
-                //}
+                foreach (Comentario comentario in post.DevolverListaComentarios())
+                {
+                    if (comentario.Contenido.Contains(texto) && comentario.CalcularValorAceptacion() > aceptacion) 
+                    {
+                        publicacionesContienenTexto.Add(comentario);
+                    }
+                }
             }
             ViewBag.PublicacionesContienenTexto = publicacionesContienenTexto;
             return View("wonderland", publicacionesContienenTexto);

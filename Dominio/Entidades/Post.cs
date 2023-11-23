@@ -107,6 +107,8 @@ namespace Dominio.Entidades
 
             return comentarioBuscado;
         }
+
+
         #endregion
 
         #region Interface Methods
@@ -120,6 +122,23 @@ namespace Dominio.Entidades
         public override string ToString()
         {
             return $"Fecha:{_fecha}\nTitulo: {_titulo}\nContenido: {_contenido}";
+        }
+
+        public override int CalcularValorAceptacion()
+        {
+
+            int likes = 0;
+            int dislikes = 0;
+            foreach (Reaccion reaccion in Reacciones)
+            {
+                if(reaccion.Like)
+                    likes++;
+                else
+                    dislikes++;
+            }
+            int valorAceptacion = (likes * 5) + (dislikes * -2);
+
+            return Privado ? valorAceptacion : valorAceptacion + 10;
         }
         #endregion
     }
