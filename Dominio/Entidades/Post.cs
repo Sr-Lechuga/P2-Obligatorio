@@ -17,6 +17,7 @@ namespace Dominio.Entidades
         public string Image
         {
             get { return _imagen; }
+            set { _imagen = value; }
         }
         public bool Privado
         {

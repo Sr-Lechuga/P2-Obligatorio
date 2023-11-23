@@ -457,6 +457,11 @@ namespace Dominio
             return miembro;
         }
 
+        public void AgregarPost(Post post)
+        {
+            post.Validar();
+            _posteos.Add(post);
+        }
         #region Auxiliares
 
         /// <summary>

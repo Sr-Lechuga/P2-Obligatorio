@@ -30,6 +30,7 @@ namespace Dominio.Entidades
         public Miembro Autor
         {
             get { return _autor; }
+            set { _autor = value; }
         }
 
         public DateTime Fecha

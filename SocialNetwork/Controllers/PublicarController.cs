@@ -1,5 +1,4 @@
 ﻿using Dominio.Entidades;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SocialNetwork.Controllers
@@ -8,20 +7,26 @@ namespace SocialNetwork.Controllers
     {
         Dominio.SocialNetwork _sistema = Dominio.SocialNetwork.Instancia;
 
-        [HttpGet]
         public ActionResult Publicar()
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult Publicar(Publicacion nuevaPublicacion) 
+
+        public ActionResult RealizarPublicacion(string titulo, string contenido, string imagen, int privado)
         {
-            if(ModelState.IsValid)
+            Miembro autor = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+            Post nuevoPost = new Post(titulo, contenido, autor, imagen, privado == 0 ? false : true);
+            try
             {
-                _sistema.Posteos.Add((Post)nuevaPublicacion);
-                return RedirectToAction("Publicar");
+                _sistema.AgregarPost(nuevoPost);
+                ViewBag.Mensaje = "El post se agrego con exito";
             }
-            return View(nuevaPublicacion);
+            catch (Exception ex)
+            {
+                ViewBag.MensajeError = ex.Message;
+            }
+
+            return View("Publicar");
         }
     }
 

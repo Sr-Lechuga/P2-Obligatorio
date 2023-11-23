@@ -1,27 +1,40 @@
 ﻿@using Dominio.Entidades;
 
+@{
+    ViewBag.Title = "Publicar";
+}
+
+@if (ViewBag.MensajeError != null)
+{
+    <h2 class="alert-danger text-center">@ViewBag.MensajeError</h2>
+}
+@if (ViewBag.Mensaje != null)
+{
+    <h2 class="alert-success text-center">@ViewBag.Mensaje</h2>
+}
+
 @model Publicacion;
 
 <div class="post-container">
     <h2 class="text-center">Crear Publicación</h2>
 
-    <form method="post" action="/Publicar/Publicar" class="post-container">
+    <form method="get" action="/Publicar/RealizarPublicacion" class="post-container">
         <label>Título:</label>
-        <input type="text" name="Titulo" required />
-
-        <label>Imagen (URL):</label>
-        <input type="url" name="ImagenUrl" />
+        <input name="titulo" type="text" required />
 
         <label>Contenido:</label>
-        <textarea name="Contenido" rows="4" required></textarea>
+        <textarea name="contenido" rows="4" required></textarea>
+
+        <label>Imagen (URL):</label>
+        <input name="imagen" type="url" />
 
         <label>Visibilidad:</label>
-        <select name="EsPublico" required>
-            <option value="true">Público</option>
-            <option value="false">Privado</option>
+        <select name="privado" required>
+            <option value=0 >Público</option>
+            <option value=1 >Privado</option>
         </select>
 
-        <input type="submit" value="Publicar" />
+        <input type="submit" value="Pblicar" />
     </form>
 </div>
 
