@@ -50,6 +50,36 @@ namespace SocialNetwork.Controllers
             }
         }
 
+        [HttpGet] // Este atributo indica que el método responde a solicitudes HTTP GET
+        public IActionResult Registro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Registro(string email, string nombre, string apellido, string contrasenia, string confirmarContrasenia, DateTime fechaDeNacimiento)
+        {
+            try
+            {
+        
+                if (contrasenia != confirmarContrasenia)
+                {
+                    throw new Exception("Las contraseñas no coinciden.");
+                }
+
+                Miembro nuevoMiembro = new Miembro(email, contrasenia, nombre, apellido, fechaDeNacimiento);
+                _sistema.AltaMiembro(nuevoMiembro);
+
+                
+                return RedirectToAction("Ingresar");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.MensajeError = ex.Message;
+                return View();
+            }
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();

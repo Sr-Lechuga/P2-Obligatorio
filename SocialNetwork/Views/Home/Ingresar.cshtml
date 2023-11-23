@@ -2,22 +2,28 @@
     ViewBag.Title = "Login";
 }
 
+<div class="post-container">
 <h1>Login</h1>
 
-<form method="post">
+<form method="post" class="formulario">
     <input type="text" name="email" placeholder="Ingrese su email" />
     <input type="password" name="contrasenia" placeholder="Ingrese su contraseña" />
     <input type="submit" value="Login" />
 </form>
-
+</div>
+<div class="post-container">
 <h1>Registrarse</h1>
 
-<form method="post">
+<form method="post" class="formulario">
     <input type="text" name="email" placeholder="Ingrese su email" />
-    <input type="text" name="nombre" placeholder="Ingrese su nombre" />
     <input type="password" name="contrasenia" placeholder="Ingrese su contraseña" />
     <input type="password" name="contrasenia" placeholder="Repita su contraseña" />
+    <input type="text" name="nombre" placeholder="Ingrese su nombre" />
+    <input type="text" name="apellido" placeholder="Ingrese su apellido" />
+    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+    <input type="date" name="fechaNacimiento" />
+    
     <input type="submit" value="Registro" />
 </form>
-
+</div>
 <p class="alert-danger">@ViewBag.MensajeError</p>

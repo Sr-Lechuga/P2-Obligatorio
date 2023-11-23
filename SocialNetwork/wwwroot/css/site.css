@@ -115,3 +115,8 @@ body {
     resize: none;
     height: 120px;
 }
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
