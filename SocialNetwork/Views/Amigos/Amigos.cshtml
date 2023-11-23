@@ -1,32 +1,15 @@
-﻿
+﻿@using Dominio.Entidades;
 
-<h2>Lista de Amigos</h2>
-<ul>
-    @foreach(Miembro amigo in Model.Amigos)
-    {
-        <li>@amigo.Nombre - (@amigo.Email)</li>
-    }
-</ul>
+@model List<Miembro>;
+@* La lista de miembros que llega a la vista son los amigos del usuario logueado *@\
 
-<h2>Solicitudes Pendientes</h2>
-<ul>
-    @foreach(Solicitud solicitud in Model.SolicitudesPendientes)
-    {
-        <li>
-            @solicitud.Nombre - (@solicitud.Email)
-            <a href="/Amigos/AceptarSolicitud?email=@solicitud.Email">Aceptar</a>
-            <a href="/Amigos/RechazarSolicitud?email=@solicitud.Email">Rechazar</a>
-        </li>
-    }
-</ul>
-
-<h2>Usuarios no Amigos</h2>
-<ul>
-    @foreach (Miembro usuario in Model.UsuariosNoAmigos)
-    {
-        <li>
-            @usuario.Nombre - (@usuario.Email)
-            <a href="/Amigos/EnviarSolicitud?email=@usuario.Email">Enviar Solicitud</a>
-        </li>
-    }
-</ul>
+<div>
+@foreach(Miembro amigos in Model)
+{
+    <div>
+        <span>@amigos.Nombre</span>
+        <span>@amigos.Apellido</span>
+        <span>@amigos.Email</span>
+    </div>
+}
+</div>
