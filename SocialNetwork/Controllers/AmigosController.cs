@@ -61,10 +61,10 @@ namespace SocialNetwork.Controllers
 
             Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
 
-            //Agrega a la lista de amistades pendientes si el miembro logueado es el solicitante o el solicitado
+            //Agrega a la lista de amistades pendientes si el miembro logueado es el solicitado
             foreach (Solicitud solicitud in _sistema.Solicitudes)
             {
-                if ((solicitud.Solicitante.Equals(miembroLogueado) || solicitud.Solicitado.Equals(miembroLogueado)) 
+                if (solicitud.Solicitado.Equals(miembroLogueado) 
                     && solicitud.Estado == EstadoSolicitud.PENDIENTE_APROVACION)
                     amigosPendientes.Add(solicitud.Solicitado);
             }
