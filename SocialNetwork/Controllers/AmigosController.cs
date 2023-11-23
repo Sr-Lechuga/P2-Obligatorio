@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Dominio;
+﻿using Microsoft.AspNetCore.Mvc;
 using Dominio.Entidades;
 
 namespace SocialNetwork.Controllers
@@ -11,7 +9,7 @@ namespace SocialNetwork.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public IActionResult Amigos()
@@ -39,9 +37,10 @@ namespace SocialNetwork.Controllers
             List<Miembro> miembrosDisponibles = new List<Miembro>();
             foreach (Solicitud solicitud in _sistema.Solicitudes)
             {
-                if (solicitud.Solicitante.Equals(miembroLogueado))
+                if (solicitud.Solicitante.Equals(miembroLogueado)
+                    && !listaAmigos.Contains(solicitud.Solicitado))
                 {
-                    
+
                 }
             }
 
