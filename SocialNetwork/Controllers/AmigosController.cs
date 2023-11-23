@@ -53,5 +53,21 @@ namespace SocialNetwork.Controllers
             return View(miembrosDisponibles);
         }
 
+        public IActionResult Pendientes()
+        {
+            List<Miembro> amigosPendientes = new List<Miembro>();
+
+            Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+
+            foreach (Solicitud solicitud in _sistema.Solicitudes)
+            {
+                if ((solicitud.Solicitante.Equals(miembroLogueado) || solicitud.Solicitado.Equals(miembroLogueado)) 
+                    && solicitud.Estado == EstadoSolicitud.PENDIENTE_APROVACION)
+                    amigosPendientes.Add(solicitud.Solicitado);
+            }
+
+            return View(amigosPendientes);
+        }
+
     }
 }
