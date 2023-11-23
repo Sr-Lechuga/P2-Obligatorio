@@ -46,7 +46,7 @@ namespace Dominio
         //Todas las listas son recupeerables, pero no pse pueden modificar fuera de la clase sistema
         public List<Usuario> Usuarios { get { return _usuarios; } }
         public List<Solicitud> Solicitudes { get { return _relaciones; } }
-        public List<Post> Posteos { get { return _posteos; } }
+        public List<Post> Posteos { get { return _posteos; } set { _posteos = value; } }
 
         #endregion
 
