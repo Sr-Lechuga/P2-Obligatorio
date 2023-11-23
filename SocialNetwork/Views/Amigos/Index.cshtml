@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@if (ViewBag.MensajeError != null)
+{
+    <h2 class="alert-danger text-center">@ViewBag.MensajeError</h2>
+}
+<h
+    2>Amistades</h2>
+<div>
+    <input type="button" value="Amigos" href="Amigos/Amigos" />
+</div>
+
+<div>
+    <input type="button" value="Posibles amistades" href="Amigos/Buscar" />
+</div>
+<div>
+    <input type="button" value="Solicitudes pendientes" href="Amigos/Pendientes"/>
+</div>
