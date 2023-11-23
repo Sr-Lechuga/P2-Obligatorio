@@ -563,9 +563,14 @@ namespace Dominio
         /// Metodo que permite enviar una <c>Solicitud</c> de amistad
         /// </summary>
         /// <param name="miembro"><c>Miembro</c> al que se le enviara la solicitud</param>
-        public void EnviarSolicitud(Miembro miembro)
+        public void EnviarSolicitud(string emailMiembroSolicitante, string emailMiembroSolicitado)
         {
-            //NEXT: Proxima entrega
+            Miembro miembroSolicitante = BuscarMiembro(emailMiembroSolicitante);
+            Miembro miembroSolicitado = BuscarMiembro(emailMiembroSolicitado);
+
+            Solicitud nuevaSolicitud = new Solicitud(miembroSolicitante,miembroSolicitado);
+
+            _relaciones.Add(nuevaSolicitud);
         }
 
         /// <summary>

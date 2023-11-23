@@ -134,5 +134,19 @@ namespace SocialNetwork.Controllers
 
             return RedirectToAction("Pendientes");
         }
+
+        public IActionResult EnviarSolicitud(string emailSolicitado)
+        {
+            try
+            {
+                _sistema.EnviarSolicitud(HttpContext.Session.GetString("emailUsuario"),emailSolicitado);
+                return RedirectToAction("Buscar");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.MensajeError = ex.Message;
+                return View("Index");
+            }
+        }
     }
 }
