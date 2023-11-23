@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Dominio.Entidades;
-using Dominio.Enum;
 
 namespace SocialNetwork.Controllers
 {
@@ -102,18 +101,18 @@ namespace SocialNetwork.Controllers
             List<Publicacion> publicacionesContienenTexto = new List<Publicacion>();
             foreach(Post post in _sistema.Posteos)
             {
-                if(post.Contenido.Contains(texto) && post.ValorDeAceptacion() > aceptacion) // Crear el metodo valor de aceptacion las pautas se encuentran en la letra del obligatorio 1
-                {
-                    publicacionesContienenTexto.Add(post);
-                }
+                //if(post.Contenido.Contains(texto) && post.ValorDeAceptacion() > aceptacion) // Crear el metodo valor de aceptacion las pautas se encuentran en la letra del obligatorio 1
+                //{
+                //    publicacionesContienenTexto.Add(post);
+                //}
 
-                foreach (Comentario comentario in post.DevolverListaComentarios())
-                {
-                    if(comentario.Contenido.Contains(texto) && comentario.ValorAceptacion() > aceptacion) //Crear metodo ValorAceptacion()
-                    {
-                        publicacionesContienenTexto.Add(comentario);
-                    }
-                }
+                //foreach (Comentario comentario in post.DevolverListaComentarios())
+                //{
+                //    if(comentario.Contenido.Contains(texto) && comentario.ValorAceptacion() > aceptacion) //Crear metodo ValorAceptacion()
+                //    {
+                //        publicacionesContienenTexto.Add(comentario);
+                //    }
+                //}
             }
             ViewBag.PublicacionesContienenTexto = publicacionesContienenTexto;
             return View("wonderland", publicacionesContienenTexto);
