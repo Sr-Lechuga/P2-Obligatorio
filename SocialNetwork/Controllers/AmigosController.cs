@@ -1,83 +1,51 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Dominio;
+using Dominio.Entidades;
 
 namespace SocialNetwork.Controllers
 {
     public class AmigosController : Controller
     {
-        // GET: AmigosController
-        public ActionResult Index()
+        Dominio.SocialNetwork _sistema = Dominio.SocialNetwork.Instancia;
+
+        public IActionResult Index()
         {
             return View();
         }
 
-        // GET: AmigosController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AmigosController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AmigosController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Amigos()
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+                List<Miembro> listaAmigos = _sistema.BuscarAmigos(miembroLogueado);
+                return View(listaAmigos);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.MensajeError = ex.Message;
+                return View("Index");
             }
         }
 
-        // GET: AmigosController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Buscar()
         {
-            return View();
-        }
+            List<Miembro> listaMiembros = new List<Miembro>();
 
-        // POST: AmigosController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            Miembro miembroLogueado = _sistema.BuscarMiembro(HttpContext.Session.GetString("emailUsuario"));
+            List<Miembro> listaAmigos = _sistema.BuscarAmigos(miembroLogueado);
 
-        // GET: AmigosController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+            List<Miembro> miembrosDisponibles = new List<Miembro>();
+            foreach (Solicitud solicitud in _sistema.Solicitudes)
+            {
+                if (solicitud.Solicitante.Equals(miembroLogueado))
+                {
+                    
+                }
+            }
 
-        // POST: AmigosController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(listaMiembros);
         }
     }
 }
